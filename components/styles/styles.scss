@@ -1,0 +1,78 @@
+$b: black;
+$w: white;
+$sun_color: #FFC700;
+$b_black: 1px solid black;
+$b_white: 1px solid white;
+$block_radius: 35px;
+$icon_radius: 15px;
+$card_radius: 25px;
+$card_height: 255px;
+$card_width_1: 165px;
+$btn_height: 30px;
+$btn_width: 120px;
+$f_size1: 25px;
+$f_size2: 15px;
+$f_size3: 20px;
+$Orienta: "Orienta", sans-serif;
+$OpenSans: "Open Sans Condensed", sans-serif;
+
+.changeBackground {
+	background: $b;
+}
+
+.changeText {
+	color: $w;
+}
+
+.changeBlackText {
+	color: $b;
+}
+
+.changeBorder {
+	background: $b;
+	border: $b_white;
+}
+
+.changeBackShadow {
+	background: linear-gradient(180deg, #000000 0%, rgba(12, 12, 12, 0.953125) 0.01%, rgba(255, 255, 255, 0) 100%);
+}
+
+.moonLight {
+	text-shadow: 0 0 30px $w;
+}
+
+.borderBtm {
+	border-bottom: $b_white;
+}
+
+.justBorder {
+	border: $b_white;
+}
+
+.changeButton {
+	background: $b;
+	color: $w;
+}
+
+.justBlackBorder {
+	border: $b_black;
+}
+
+
+.changeBorder2 {
+	background: $b;
+	border-top: $b_white;
+}
+
+@mixin two_button($mr) {
+   height: $btn_height;
+   width: $btn_width;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 0;
+   background: $w;
+   font-size: $f_size2;
+   font-family: $Orienta;
+   margin: $mr;
+}
