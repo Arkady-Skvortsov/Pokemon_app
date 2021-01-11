@@ -33,8 +33,7 @@
       <div
         class="pokemon-wrapper__body"
         :style="{
-          'background-image': `url(${require('../assets/img/pockemons/first_generation/' +
-            CardInfo.PokemonBackground)})`,
+          'background-image': `url(${require(`../assets/img/pockemons/first_generation/${CardInfo.PokemonBackground}`)})`,
           'background-size': 'cover',
           'background-position': 'center',
           borderBottom: theme ? '1px solid white' : '1px solid black',

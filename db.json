@@ -1,0 +1,42 @@
+{
+  "pokemons": [
+    {
+      "id": 1,
+      "PokemonName": "abra",
+      "PokemonType": "Psychic",
+      "PokemonIcon": "psyhistic.png",
+      "PokemonBackground": "abra.png",
+      "PokemonTypeBackground": "psyhist.jpg",
+      "PokemonHeight": "0.9",
+      "PokemonWeight": "19.5",
+      "PokemonInfo": {
+        "HP": 25,
+        "Attack": 20,
+        "SpecialAttack": 105,
+        "Defense": 15,
+        "SpecialDefense": 55,
+        "Speed": 90
+      },
+      "PokemonAbout": "Этот покемон использует свои экстрасенсорные способности, пока спит. Содержание снов Абры влияет на способности покемонов. Абра может телепортироваться во сне. Видимо, чем глубже спит Абра, тем дальше идут его телепортации."
+    },
+    {
+      "id": 2,
+      "PokemonName": "zapdos",
+      "PokemonType": "Electric/Flying",
+      "PokemonIcon": "electric.png",
+      "PokemonBackground": "zapdos.png",
+      "PokemonTypeBackground": "electric.jpg",
+      "PokemonHeight": "1.6",
+      "PokemonWeight": "52.6",
+      "PokemonInfo": {
+        "HP": 90,
+        "Attack": 90,
+        "SpecialAttack": 125,
+        "Defense": 85,
+        "SpecialDefense": 90,
+        "Speed": 100
+      },
+      "PokemonAbout": "Запдос - легендарный птичий покемон, который генерирует электричество. Говорят, что когда Запдос потирает свои перья, сразу же после этого упадет молния. Так же ходят легенды о том, что он гнездится в черных, как смоль - грозовых облаках"
+    }
+  ]
+}

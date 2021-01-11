@@ -55,17 +55,17 @@
     <div class="pokemon-little-information-block">
       <div class="pokemon__height blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
-          >Height: {{ pokemon.PokemonHeight }}</span
+          >Height: {{ pokemon.PokemonHeight }}m</span
         ><!-- m -->
       </div>
       <div class="pokemon__name blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
-          >Name: {{ pokemon.PokemonName }}</span
+          >Name: {{ pokemon.PokemonName | Upper }}</span
         >
       </div>
       <div class="pokemon__weight blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
-          >Weight: {{ pokemon.PokemonWeight }}</span
+          >Weight: {{ pokemon.PokemonWeight }}kg</span
         ><!-- kg -->
       </div>
       <div class="pokemon__type blocks">
@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import Upper from '../filters/Upper.js'
 import About from '../components/About.vue'
 import Stat from '../components/Stat.vue'
 
@@ -115,6 +116,8 @@ export default {
       txt: 'Параметры',
     }
   },
+
+  filters: { Upper },
 
   computed: {
     change() {

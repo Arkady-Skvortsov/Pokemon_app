@@ -1,5 +1,8 @@
 <template>
-  <div class="pokemon-home-page" :class="{ changeBackground: theme }">
+  <div
+    class="pokemon-home-page"
+    :style="{ background: theme === true ? 'black' : 'white' }"
+  >
     <div>
       <Functional @ChangeTheme="ChangeTheme2" />
     </div>
@@ -58,89 +61,54 @@ import Functional from '../components/Functional.vue'
 import Card from '../components/Card.vue'
 
 export default {
+  components: {
+    Functional,
+    Card,
+  },
+
   data() {
     return {
       pokemons: [
-        {
-          id: 1, //#1,
-          PokemonName: 'zapdos', //filters.js
-          PokemonType: 'Electric/Flying',
-          PokemonIcon: 'electric.png',
-          PokemonBackground: 'zapdos.png',
-          PokemonTypeBackground: 'electric.jpg',
-          PokemonHeight: '1.6m',
-          PokemonWeight: '52.6kg',
-          PokemonInfo: {
-            HP: '90', //parseFloat
-            Attack: '90',
-            SpecialAttack: '125',
-            Defense: '85',
-            SpecialDefense: '90',
-            Speed: '100',
-          },
-          PokemonAbout:
-            'Запдос - легендарный птичий покемон, который генерирует электричество. Говорят, что когда Запдос потирает свои перья, сразу же после этого упадет молния. Так же ходят легенды о том, что он гнездится в черных, как смоль - грозовых облаках',
-        },
-        {
-          id: 2, //#1,
-          PokemonName: 'pikachu', //filters.js
-          PokemonType: 'Electric',
-          PokemonIcon: 'electric.png',
-          PokemonBackground: 'pikachu.png',
-          PokemonTypeBackground: 'electric.jpg',
-          PokemonHeight: '0.4m',
-          PokemonWeight: '6.0kg',
-          PokemonInfo: {
-            HP: '35', //parseFloat
-            Attack: '55',
-            SpecialAttack: '50',
-            Defense: '40',
-            SpecialDefense: '50',
-            Speed: '90',
-          },
-          PokemonAbout:
-            'Пикачу, который может генерировать мощное электричество, имеет щёчные мешочки, очень мягкие и эластичные. Когда Пикачу встречается, они касаются друг друга хвостами и обмениваются через них электричеством в качестве приветствия.',
-        },
-        {
-          id: 3, //#1,
-          PokemonName: 'meowth', //filters.js
-          PokemonType: 'Normal',
-          PokemonIcon: 'normal.png',
-          PokemonBackground: 'meowth.png',
-          PokemonTypeBackground: 'normal.jpg',
-          PokemonHeight: '0.4m',
-          PokemonWeight: '4.2kg',
-          PokemonInfo: {
-            HP: '40', //parseFloat
-            Attack: '45',
-            SpecialAttack: '40',
-            Defense: '35',
-            SpecialDefense: '40',
-            Speed: '90',
-          },
-          PokemonAbout:
-            'Любит собирать блестящие вещи. Если он в хорошем настроении, он может даже позволить своему тренеру взглянуть на свои сокровища. Он регулярно моет лицо, чтобы монета на лбу оставалась безупречной. Он не ладит с галарским мяутом.',
-        },
-        {
-          id: 4, //#1,
-          PokemonName: 'articuno', //filters.js
-          PokemonType: 'Ice/Flying',
-          PokemonIcon: 'flying.png',
-          PokemonBackground: 'articuno.png',
-          PokemonTypeBackground: 'fairy.jpg',
-          PokemonHeight: '1.6m',
-          PokemonWeight: '52.6kg',
-          PokemonInfo: {
-            HP: '90', //parseFloat
-            Attack: '85',
-            SpecialAttack: '95',
-            Defense: '100',
-            SpecialDefense: '125',
-            Speed: '95',
-          },
-          PokemonAbout:
-            'Говорят, что красивые синие крылья этого покемона сделаны из льда. Артикуно летит над заснеженными горами, его длинный хвост развевается за ним. Этот покемон может управлять льдом по своему желанию. Говорят, что Артикуно живет в заснеженных горах, покрытых вечной мерзлотой.',
-        },
+        // {
+        //   id: 1, //#1,
+        //   PokemonName: 'zapdos', //filters.js
+        //   PokemonType: 'Electric/Flying',
+        //   PokemonIcon: 'electric.png',
+        //   PokemonBackground: 'zapdos.png',
+        //   PokemonTypeBackground: 'electric.jpg',
+        //   PokemonHeight: '1.6m',
+        //   PokemonWeight: '52.6kg',
+        //   PokemonInfo: {
+        //     HP: '90', //parseFloat
+        //     Attack: '90',
+        //     SpecialAttack: '125',
+        //     Defense: '85',
+        //     SpecialDefense: '90',
+        //     Speed: '100',
+        //   },
+        //   PokemonAbout:
+        //     'Запдос - легендарный птичий покемон, который генерирует электричество. Говорят, что когда Запдос потирает свои перья, сразу же после этого упадет молния. Так же ходят легенды о том, что он гнездится в черных, как смоль - грозовых облаках',
+        // },
+        // {
+        //   id: 2, //#1,
+        //   PokemonName: 'pikachu', //filters.js
+        //   PokemonType: 'Electric',
+        //   PokemonIcon: 'electric.png',
+        //   PokemonBackground: 'pikachu.png',
+        //   PokemonTypeBackground: 'electric.jpg',
+        //   PokemonHeight: '0.4m',
+        //   PokemonWeight: '6.0kg',
+        //   PokemonInfo: {
+        //     HP: '35', //parseFloat
+        //     Attack: '55',
+        //     SpecialAttack: '50',
+        //     Defense: '40',
+        //     SpecialDefense: '50',
+        //     Speed: '90',
+        //   },
+        //   PokemonAbout:
+        //     'Пикачу, который может генерировать мощное электричество, имеет щёчные мешочки, очень мягкие и эластичные. Когда Пикачу встречается, они касаются друг друга хвостами и обмениваются через них электричеством в качестве приветствия.',
+        // },
       ],
     }
   },
@@ -153,6 +121,20 @@ export default {
     choiceP() {
       return this.$store.getters['pokemon/CHOICEPOKEMON']
     },
+
+    pokem() {
+      return this.$store.getters['pokemon/POKEMONS']
+    },
+  },
+
+  async asyncData({ $axios }) {
+    let pokemons = await $axios.$get('http://localhost:3000/pokemons')
+
+    return { pokemons }
+  },
+
+  mounted() {
+    console.log(this.pokemons)
   },
 
   methods: {
@@ -183,15 +165,6 @@ export default {
     ChooseYou2(payload) {
       console.log(payload)
     },
-  },
-
-  mounted() {
-    console.log(this.choiceP)
-  },
-
-  components: {
-    Functional,
-    Card,
   },
 }
 </script>

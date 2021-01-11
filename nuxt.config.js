@@ -31,10 +31,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     // '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
   ],
 
-  //Не забыть про sass-loader and node-sass
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -47,19 +45,15 @@ export default {
     color: 'orange',
   },
 
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: 'http://localhost:3000/pokemons',
+    },
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
-
-  config: {
-    //Firebase
-    apiKey: 'AIzaSyA6ZY_rBfl_zBbJKivL_hcTOFZkUFk3X-Y',
-    authDomain: 'pokemon-app-4d75d.firebaseapp.com',
-    projectId: 'pokemon-app-4d75d',
-    storageBucket: 'pokemon-app-4d75d.appspot.com',
-    messagingSenderId: '39074412332',
-    appId: '1:39074412332:web:cd8dcba7cb658ef7e2de89',
-  },
 }

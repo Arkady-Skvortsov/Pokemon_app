@@ -191,290 +191,289 @@
           </div>
         </transition-group>
       </div>
-    </div>
 
-    <div class="settings-with-numbers-block">
-      <!--Возможно помещу это в <slot></slot>, ведь на домашней странице будет проще это сделать за счет того, что там уже есть все getters, actions из Vuex и тд...-->
-      <div class="HP-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По HP</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <!--  :style="{background: theme === true ? 'white' : 'black'}", пусть побудет в разряде бага)) -->
-          <input
-            type="range"
-            class="range-slider health-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="health.minHealth"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider health-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="health.maxHealth"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+      <div class="settings-with-numbers-block">
+        <div class="HP-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ health.minHealth }}</span
+              >По HP</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ health.maxHealth }}</span
-            >
+
+          <div class="range-slider-block">
+            <!--  :style="{background: theme === true ? 'white' : 'black'}", пусть побудет в разряде бага)) -->
+            <input
+              type="range"
+              class="range-slider health-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="health.minHealth"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider health-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="health.maxHealth"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ health.minHealth }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ health.maxHealth }}</span
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="Attack-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По Атаке</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <input
-            type="range"
-            class="range-slider attack-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="attack.minAttack"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider attack-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="attack.maxAttack"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+        <div class="Attack-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ attack.minAttack }}</span
+              >По Атаке</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ attack.maxAttack }}</span
-            >
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider attack-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="attack.minAttack"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider attack-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="attack.maxAttack"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ attack.minAttack }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ attack.maxAttack }}</span
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="SpecialAttack-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По Спец.Атаке</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <input
-            type="range"
-            class="range-slider special-attack-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="specialAttack.minSpecialAttack"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider special-attack-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="specialAttack.maxSpecialAttack"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+        <div class="SpecialAttack-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ specialAttack.minSpecialAttack }}</span
+              >По Спец.Атаке</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ specialAttack.maxSpecialAttack }}</span
-            >
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider special-attack-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="specialAttack.minSpecialAttack"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider special-attack-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="specialAttack.maxSpecialAttack"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ specialAttack.minSpecialAttack }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ specialAttack.maxSpecialAttack }}</span
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="Defense-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По Защите</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <input
-            type="range"
-            class="range-slider defense-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="defense.minDefense"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider defense-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="defense.maxDefense"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+        <div class="Defense-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ defense.minDefense }}</span
+              >По Защите</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ defense.maxDefense }}</span
-            >
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider defense-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="defense.minDefense"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider defense-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="defense.maxDefense"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ defense.minDefense }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ defense.maxDefense }}</span
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="SpecialDefense-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По Спец.Защите</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <input
-            type="range"
-            class="range-slider special-defense-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="specialDefense.minSpecialDefense"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider special-defense-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="specialDefense.maxSpecialDefense"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+        <div class="SpecialDefense-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ specialDefense.minSpecialDefense }}</span
+              >По Спец.Защите</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ specialDefense.maxSpecialDefense }}</span
-            >
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider special-defense-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="specialDefense.minSpecialDefense"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider special-defense-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="specialDefense.maxSpecialDefense"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ specialDefense.minSpecialDefense }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ specialDefense.maxSpecialDefense }}</span
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="Speed-settings-block stat-settings-blocks">
-        <div>
-          <span
-            class="stat-settings-txt"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По Скорости</span
-          >
-        </div>
-
-        <div class="range-slider-block">
-          <input
-            type="range"
-            class="range-slider speed-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="speed.minSpeed"
-            @change="changeParams($event)"
-          />
-          <input
-            type="range"
-            class="range-slider speed-slider"
-            min="0"
-            max="250"
-            step="10"
-            v-model.number="speed.maxSpeed"
-            @change="changeParams($event)"
-          />
-        </div>
-
-        <div class="range-stat-block">
+        <div class="Speed-settings-block stat-settings-blocks">
           <div>
             <span
-              class="range-min-stat-txt range-stat-txt"
+              class="stat-settings-txt"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ speed.minSpeed }}</span
+              >По Скорости</span
             >
           </div>
-          <div>
-            <span
-              class="range-max-stat-txt range-stat-txt"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ speed.maxSpeed }}</span
-            >
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider speed-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="speed.minSpeed"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider speed-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="speed.maxSpeed"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ speed.minSpeed }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ speed.maxSpeed }}</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -604,7 +603,7 @@ export default {
 </script>
 
 <style lang="scss">
-@media only screen and (min-device-width: 360px) {
+@media only screen and (min-device-width: 320px) {
   .pokemon-filters-block {
     height: 100vh;
     width: 100vw;
