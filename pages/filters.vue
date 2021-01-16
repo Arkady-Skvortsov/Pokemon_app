@@ -59,13 +59,12 @@
             >arrow_drop_down</i
           >
         </div>
-        <transition-group name="settings-choice-anim">
+        <transition-group name="settings-choice-anim" v-if="shows">
           <div
             class="settings-choice-block"
-            v-for="sIdx in settingsIndex"
+            v-for="(sIdx, index) in settingsIndex"
             :key="sIdx.id"
-            v-if="shows"
-            @click="ShowMeIndex(sIdx.name)"
+            @click="SortByIndex(index)"
             :style="{
               background: theme === true ? 'black' : 'white',
               border: theme === true ? '1px solid white' : '1px solid black',
@@ -111,13 +110,12 @@
             >arrow_drop_down</i
           >
         </div>
-        <transition-group name="settings-choice-anim">
+        <transition-group name="settings-choice-anim" v-if="shows2">
           <div
             class="settings-choice-block"
             v-for="(Name, index) in settingsName"
             :key="Name.id"
-            v-if="shows2"
-            @click="ShowMeName(Name.name)"
+            @click="SortByName(index)"
             :style="{
               background: theme === true ? 'black' : 'white',
               border: theme === true ? '1px solid white' : '1px solid black',
@@ -163,12 +161,12 @@
             >arrow_drop_down</i
           >
         </div>
-        <transition-group name="settings-choice-anim">
+        <transition-group name="settings-choice-anim" v-if="shows3">
           <div
             class="settings-choice-race-block"
             v-for="(Race, index) in settingsRace"
             :key="Race.id"
-            v-if="shows3"
+            @click="SortByRace(index)"
             :style="{
               background: theme === true ? 'black' : 'white',
               border: theme === true ? '1px solid white' : '1px solid black',
@@ -484,7 +482,6 @@
 <script>
 export default {
   data: () => ({
-    //Лучше пользоваться этой конструкцией, ведь не нужно ничего ПОСТОЯННО возвращать return {};
     shows: false,
     shows2: false,
     shows3: false,
@@ -530,15 +527,143 @@ export default {
     settingsRace() {
       return this.$store.getters['settings/SETTINGSRACE']
     },
+
+    POKEMONS() {
+      return this.$store.getters['pokemon/POKEMONS']
+    },
+
+    FilteredPokemons() {
+      return this.POKEMONS
+    },
   },
 
   methods: {
-    ShowMeIndex(payload) {
-      alert(payload)
+    SortByIndex(idx) {
+      //С тобой я тоже разберусь
+      switch (idx) {
+        case 0:
+          this.$store.commit(
+            'pokemon/SETPOKEMONS',
+            this.POKEMONS.sort((a, b) => (a.id -= b.id))
+          )
+          break
+        case 1:
+          this.$store.commit(
+            'pokemon/SETPOKEMONS',
+            this.POKEMONS.sort((a, b) => (b.id -= a.id))
+          )
+          break
+      }
     },
 
-    ShowMeName(payload) {
-      alert(payload)
+    SortByName(idx) {
+      switch (idx) {
+        case 0:
+          this.FilteredPokemons.sort((a, b) =>
+            a.PokemonName.localeCompare(b.PokemonName)
+          )
+          break
+        case 1:
+          this.FilteredPokemons.sort((a, b) =>
+            b.PokemonName.localeCompare(a.PokemonName)
+          )
+          break
+      }
+    },
+
+    SortByRace(idx) {
+      switch (idx) {
+        case 0:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'normal.png'
+          })
+          break
+        case 1:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'electric.png'
+          })
+          break
+        case 2:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'fire.png'
+          })
+          break
+        case 3:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'ghosts.png'
+          })
+          break
+        case 4:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'fairy.png'
+          })
+          break
+        case 5:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'rock.png'
+          })
+          break
+        case 6:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'psyhistic.png'
+          })
+          break
+        case 7:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'fighting.png'
+          })
+          break
+        case 8:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'ice.png'
+          })
+          break
+        case 9:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'steel.png'
+          })
+          break
+        case 10:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'water.png'
+          })
+          break
+        case 11:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'flying.png'
+          })
+          break
+        case 12:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'ground.png'
+          })
+          break
+        case 13:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'dragon.png'
+          })
+          break
+        case 14:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'darkness.png'
+          })
+          break
+        case 15:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'poison.png'
+          })
+          break
+        case 16:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'plants.png'
+          })
+          break
+        case 17:
+          this.POKEMONS.filter((item) => {
+            return item.PokemonIcon === 'bug.png'
+          })
+          break
+      }
     },
 
     changeParams(e) {
@@ -599,11 +724,15 @@ export default {
       }
     },
   },
+
+  mounted() {
+    console.log(this.POKEMONS.length)
+  },
 }
 </script>
 
 <style lang="scss">
-@media only screen and (min-device-width: 320px) {
+@media only screen and (min-device-width: 360px) {
   .pokemon-filters-block {
     height: 100vh;
     width: 100vw;
@@ -613,7 +742,7 @@ export default {
     .filter-navbar-block {
       max-width: 240px;
       margin: 10px 10px;
-      // height: 45px;
+      //height: 45px;
       display: flex;
       justify-content: space-around;
       align-items: center;

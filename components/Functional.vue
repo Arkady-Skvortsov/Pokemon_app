@@ -21,7 +21,7 @@
 
       <div class="functional-block__search-block">
         <input
-          v-model="name"
+          v-model.trim="name"
           type="text"
           class="search-block__functional"
           :class="{
@@ -30,6 +30,7 @@
             show_search_block: searchShow,
           }"
           placeholder="Найдите покемона:)"
+          @keyup="Search"
         />
       </div>
 
@@ -45,13 +46,11 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      name: '', //Это я еще оставлю
-    }
-  },
-
   emits: ['ChageTheme'],
+
+  data: () => ({
+    name: '',
+  }),
 
   methods: {
     ChangeTheme() {
@@ -64,6 +63,10 @@ export default {
       } else {
         this.$store.dispatch('theme/CHANGES', true)
       }
+    },
+
+    Search() {
+      this.$store.dispatch('pokemon/SEARCHPOKEMONS', this.name)
     },
   },
 

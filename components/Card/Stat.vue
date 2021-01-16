@@ -8,14 +8,20 @@
         ХП:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_hp"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.HP < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              90
+              {{ stat.HP }}
             </span>
           </div>
         </div>
@@ -29,14 +35,20 @@
         Атака:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_attack"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.Attack < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              90
+              {{ stat.Attack }}
             </span>
           </div>
         </div>
@@ -50,14 +62,20 @@
         Спец.Атака:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_specialAttack"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.SpecialAttack < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              125
+              {{ stat.SpecialAttack }}
             </span>
           </div>
         </div>
@@ -71,14 +89,20 @@
         Защита:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_defense"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.Defense < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              65
+              {{ stat.Defense }}
             </span>
           </div>
         </div>
@@ -92,14 +116,20 @@
         Спец.Защита:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_specialDefense"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.SpecialDefense < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              75
+              {{ stat.SpecialDefense }}
             </span>
           </div>
         </div>
@@ -113,14 +143,20 @@
         Скорость:
       </span>
 
-      <div class="detail-statistic-block">
-        <div class="detail-statistic-child">
+      <div ref="parent_block" class="detail-statistic-block">
+        <div
+          ref="detail_child_speed"
+          class="detail-statistic-child"
+          :style="{
+            background: stat.Speed < 125 ? 'red' : 'green',
+          }"
+        >
           <div>
             <span
               class="detail-numbers"
               :style="{ color: statTheme === true ? 'black' : 'white' }"
             >
-              75
+              {{ stat.Speed }}
             </span>
           </div>
         </div>
@@ -131,9 +167,34 @@
 
 <script>
 export default {
+  mounted() {
+    this.schetForChild(this.$refs.detail_child_hp, this.stat.HP)
+    this.schetForChild(this.$refs.detail_child_attack, this.stat.Attack)
+    this.schetForChild(
+      this.$refs.detail_child_specialAttack,
+      this.stat.SpecialAttack
+    )
+    this.schetForChild(this.$refs.detail_child_defense, this.stat.Defense)
+    this.schetForChild(
+      this.$refs.detail_child_specialDefense,
+      this.stat.SpecialDefense
+    )
+    this.schetForChild(this.$refs.detail_child_speed, this.stat.Speed)
+  },
+
   computed: {
     statTheme() {
       return this.$store.getters['theme/CHANGETHEME']
+    },
+
+    stat() {
+      return this.$store.getters['pokemon/STATPOKEMONPARAMS']
+    },
+  },
+
+  methods: {
+    schetForChild(child, param) {
+      child.style.width = `${param}px`
     },
   },
 }
@@ -146,7 +207,7 @@ export default {
 
   .stat-blocks {
     height: 20px;
-    width: 100vw;
+    max-width: 100vw;
     margin-top: 10.5px;
     display: flex;
     flex-direction: row;
@@ -161,13 +222,14 @@ export default {
 
     .detail-statistic-block {
       height: 20px;
-      width: 220px;
+      width: 220px; //220px
       background: $w;
 
       .detail-statistic-child {
-        width: 65%;
-        height: inherit;
+        //width: 65%;
+        width: 0;
         background: green;
+        height: inherit;
         display: flex;
         justify-content: center;
         align-items: center;

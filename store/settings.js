@@ -100,17 +100,17 @@ export const state = () => ({
     {
       id: 16,
       race: 'Ядовитые',
-      icon: 'poisonous.png',
+      icon: 'poison.png',
     },
     {
       id: 17,
       race: 'Травяные',
-      icon: 'grass.png',
+      icon: 'plants.png',
     },
     {
       id: 18,
-      race: 'Растения',
-      icon: 'plants.png',
+      race: 'Багнутые',
+      icon: 'bug.png',
     },
   ],
 })

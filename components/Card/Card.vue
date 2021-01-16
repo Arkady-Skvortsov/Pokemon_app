@@ -22,7 +22,7 @@
         <div
           class="header-icon-block"
           :style="{
-            'background-image': `url(${require('../assets/img/icons/' +
+            'background-image': `url(${require('../../assets/img/icons/' +
               CardInfo.PokemonIcon)})`,
             'background-size': 'cover',
             'background-position': 'center',
@@ -33,18 +33,14 @@
       <div
         class="pokemon-wrapper__body"
         :style="{
-          'background-image': `url(${require(`../assets/img/pockemons/first_generation/${CardInfo.PokemonBackground}`)})`,
+          'background-image': `url(${require(`../../assets/img/pockemons/first_generation/${CardInfo.PokemonBackground}`)})`,
           'background-size': 'cover',
           'background-position': 'center',
           borderBottom: theme ? '1px solid white' : '1px solid black',
           borderTop: theme ? '1px solid white' : '1px solid black',
         }"
       >
-        <div class="pokemon-plus-block" v-if="choiceP2 !== false">
-          <button class="plus-block">
-            <i class="material-icons plus-icon" @click="ChooseYou">add</i>
-          </button>
-        </div>
+        <Plus @ChooseYou="ChooseYou" :hideShow="choiceP2" />
       </div>
       <div class="pokemon-wrapper__footer">
         <div
@@ -60,8 +56,7 @@
         <div
           class="footer-type-block"
           :style="{
-            'background-image': `url(${require('../assets/img/pockemons/types_background/JPG/' +
-              CardInfo.PokemonTypeBackground)})`,
+            'background-image': `url(${require(`../../assets/img/pockemons/types_background/JPG/${CardInfo.PokemonTypeBackground}`)}`,
             'background-size': 'cover',
             'background-position': 'center',
             borderTop: theme ? '1px solid white' : '1px solid black',
@@ -79,9 +74,14 @@
 </template>
 
 <script>
-import Upper from '../filters/Upper.js'
+import Upper from '../../filters/Upper.js'
+import Plus from './Plus.vue'
 
 export default {
+  components: {
+    Plus,
+  },
+
   filters: { Upper },
 
   props: {
@@ -131,10 +131,14 @@ export default {
   display: inline-block;
   border-radius: $card_radius;
   border: $b_black;
-  transition: 0.7s;
-  -o-transition: 0.7s;
-  -webkit-transition: 0.7s;
-  -moz-transition: 0.7s;
+  transition: 0.8s;
+  -o-transition: 0.8s;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+
+  &:hover {
+    transform: translateY(-10px);
+  }
 
   .pokemon-card-wrapper {
     .pokemon-wrapper__header {

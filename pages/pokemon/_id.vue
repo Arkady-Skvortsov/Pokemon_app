@@ -4,9 +4,9 @@
     :style="{
       background:
         pokTheme === false
-          ? `linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.833333) 0.01%, rgba(255, 255, 255, 0.829076) 0.02%, rgba(255, 255, 255, 0.786052) 0.03%, rgba(255, 255, 255, 0) 100%), url(${require('../assets/img/pockemons/types_background/JPG/' +
+          ? `linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.833333) 0.01%, rgba(255, 255, 255, 0.829076) 0.02%, rgba(255, 255, 255, 0.786052) 0.03%, rgba(255, 255, 255, 0) 100%), url(${require('../../assets/img/pockemons/types_background/JPG/' +
               pokemon.PokemonTypeBackground)})`
-          : `linear-gradient(180deg, #000000 0%, rgba(12, 12, 12, 0.953125) 0.01%, rgba(255, 255, 255, 0) 100%), url(${require('../assets/img/pockemons/types_background/JPG/' +
+          : `linear-gradient(180deg, #000000 0%, rgba(12, 12, 12, 0.953125) 0.01%, rgba(255, 255, 255, 0) 100%), url(${require('../../assets/img/pockemons/types_background/JPG/' +
               pokemon.PokemonTypeBackground)})`,
       'background-position': 'center',
       'background-size': 'cover',
@@ -32,7 +32,7 @@
       <div
         class="block-type"
         :style="{
-          'background-image': `url(${require('../assets/img/icons/' +
+          'background-image': `url(${require('../../assets/img/icons/' +
             pokemon.PokemonIcon)})`,
           'background-position': 'center',
           'background-size': 'cover',
@@ -44,7 +44,7 @@
     <div
       class="pokemon-avatar-block"
       :style="{
-        'background-image': `url(${require('../assets/img/pockemons/first_generation/' +
+        'background-image': `url(${require('../../assets/img/pockemons/first_generation/' +
           pokemon.PokemonBackground)})`,
         'background-size': 'cover',
         'background-position': 'center',
@@ -106,9 +106,9 @@
 </template>
 
 <script>
-import Upper from '../filters/Upper.js'
-import About from '../components/About.vue'
-import Stat from '../components/Stat.vue'
+import Upper from '../../filters/Upper.js'
+import About from '../../components/Card/About.vue'
+import Stat from '../../components/Card/Stat.vue'
 
 export default {
   data() {
@@ -124,13 +124,27 @@ export default {
       return this.txt === 'Параметры' ? 'About' : 'Stat'
     },
 
-    pokemon() {
-      return this.$route.query.id
-    },
-
     pokTheme() {
       return this.$store.getters['theme/CHANGETHEME']
     },
+  },
+
+  async asyncData({ $axios, params }) {
+    const pokemon = await $axios.$get(
+      'http://localhost:3000/pokemons/' + params.id
+    )
+
+    return { pokemon }
+  },
+
+  mounted() {
+    setTimeout(() => {
+      this.$store.dispatch('pokemon/CHANGESTATPARAMS', this.pokemon.PokemonInfo)
+      this.$store.dispatch(
+        'pokemon/CHANGEABOUTPARAMS',
+        this.pokemon.PokemonAbout
+      )
+    }, 0)
   },
 
   methods: {
@@ -141,7 +155,7 @@ export default {
     },
 
     GoToVersus() {
-      this.$router.push({ path: '/versus/', query: { id: this.pokemon } })
+      this.$router.push('/versus/' + this.pokemon.id)
     },
   },
 

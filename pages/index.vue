@@ -45,73 +45,38 @@
 
     <div class="pokemon-home-page__card">
       <Card
-        v-for="(pokemon, index) of pokemons"
-        :key="pokemon.id"
-        :index="index"
+        v-for="(pokemon, index) of filteredValue"
+        :key="index"
         :CardInfo="pokemon"
+        :index="index"
         @GoToParams="GoToParams2"
         @ChooseYou="ChooseYou2"
       />
+    </div>
+
+    <div v-if="message.length">
+      <Notification :mess="message" @Close="Close2" />
     </div>
   </div>
 </template>
 
 <script>
+import Notification from '../components/Notification.vue'
 import Functional from '../components/Functional.vue'
-import Card from '../components/Card.vue'
+import Card from '../components/Card/Card.vue'
 
 export default {
   components: {
+    Notification,
     Functional,
     Card,
   },
 
-  data() {
-    return {
-      pokemons: [
-        // {
-        //   id: 1, //#1,
-        //   PokemonName: 'zapdos', //filters.js
-        //   PokemonType: 'Electric/Flying',
-        //   PokemonIcon: 'electric.png',
-        //   PokemonBackground: 'zapdos.png',
-        //   PokemonTypeBackground: 'electric.jpg',
-        //   PokemonHeight: '1.6m',
-        //   PokemonWeight: '52.6kg',
-        //   PokemonInfo: {
-        //     HP: '90', //parseFloat
-        //     Attack: '90',
-        //     SpecialAttack: '125',
-        //     Defense: '85',
-        //     SpecialDefense: '90',
-        //     Speed: '100',
-        //   },
-        //   PokemonAbout:
-        //     'Запдос - легендарный птичий покемон, который генерирует электричество. Говорят, что когда Запдос потирает свои перья, сразу же после этого упадет молния. Так же ходят легенды о том, что он гнездится в черных, как смоль - грозовых облаках',
-        // },
-        // {
-        //   id: 2, //#1,
-        //   PokemonName: 'pikachu', //filters.js
-        //   PokemonType: 'Electric',
-        //   PokemonIcon: 'electric.png',
-        //   PokemonBackground: 'pikachu.png',
-        //   PokemonTypeBackground: 'electric.jpg',
-        //   PokemonHeight: '0.4m',
-        //   PokemonWeight: '6.0kg',
-        //   PokemonInfo: {
-        //     HP: '35', //parseFloat
-        //     Attack: '55',
-        //     SpecialAttack: '50',
-        //     Defense: '40',
-        //     SpecialDefense: '50',
-        //     Speed: '90',
-        //   },
-        //   PokemonAbout:
-        //     'Пикачу, который может генерировать мощное электричество, имеет щёчные мешочки, очень мягкие и эластичные. Когда Пикачу встречается, они касаются друг друга хвостами и обмениваются через них электричеством в качестве приветствия.',
-        // },
-      ],
-    }
-  },
+  data: () => ({
+    pokemons2: [],
+    noResults: false,
+    message: '',
+  }),
 
   computed: {
     theme() {
@@ -122,19 +87,45 @@ export default {
       return this.$store.getters['pokemon/CHOICEPOKEMON']
     },
 
-    pokem() {
+    VSpokemon() {
+      return this.$store.getters['pokemon/VSPOKEMON']
+    },
+
+    searchValue() {
+      return this.$store.getters['pokemon/SEARCHPOKEMON']
+    },
+
+    filteredValue() {
+      return this.pokemons2
+    },
+
+    saveThePath() {
+      return this.$store.getters['pokemon/SAVEPATH']
+    },
+
+    pokemons() {
       return this.$store.getters['pokemon/POKEMONS']
+    },
+
+    firstPokemon() {
+      return this.$store.getters['pokemon/FIRSTVSPOKEMON']
     },
   },
 
-  async asyncData({ $axios }) {
-    let pokemons = await $axios.$get('http://localhost:3000/pokemons')
+  async fetch({ store }) {
+    await store.dispatch('pokemon/GETPOKEMONS')
+  },
 
-    return { pokemons }
+  watch: {
+    searchValue() {
+      this.SearchCheck()
+    },
   },
 
   mounted() {
-    console.log(this.pokemons)
+    this.SearchCheck()
+
+    this.pokemons2 = this.pokemons
   },
 
   methods: {
@@ -150,43 +141,66 @@ export default {
       }
     },
 
+    Close2() {
+      this.message = ''
+    },
+
     GoToParams2(data) {
-      this.$router.push({ path: '/pokemon/', query: { id: data } })
+      if (this.choiceP !== false && data.id !== this.firstPokemon.id) {
+        this.$store.dispatch('pokemon/CHOOSEVSPOKEMON', data)
+
+        this.$router.replace('/versus/' + this.saveThePath)
+
+        this.message = ''
+
+        return
+      } else if (this.choiceP !== false && data.id === this.firstPokemon.id) {
+        this.message = 'Нельзя сравнивать 2х одинаковых покемонов'
+
+        return
+      } else {
+        this.$router.push('/pokemon/' + data.id)
+
+        this.message = ''
+      }
     },
 
     CancelVersus() {
       this.$store.dispatch('pokemon/CHANGESTATE', false) //Falsy
-
-      // setTimeout(() => {
-      //   this.$router.go(-2)
-      // }, 500)
     },
 
     ChooseYou2(payload) {
-      console.log(payload)
+      //Лишняя функция
+      console.log(this.$store.getters['pokemon/VSPOKEMON'])
+    },
+
+    SearchCheck() {
+      this.pokemons2 = []
+
+      if (this.searchValue) {
+        this.pokemons2 = this.pokemons.filter((item) => {
+          return item.PokemonName.toLowerCase().includes(
+            this.searchValue.toLowerCase()
+          )
+        })
+      } else {
+        this.pokemons2 = this.pokemons
+      }
     },
   },
 }
 </script>
 
 <style lang="scss">
-@media only screen and (min-device-width: 320px) {
+@media only screen and (min-device-width: 360px) {
   .pokemon-home-page {
-    height: 100vh;
-    width: 100vw;
+    height: 100vw;
+    width: 100vh;
     background: $w;
     overflow-x: hidden;
 
     .pokemon-home-page__filter {
       @include FilAndCanButton(30px, 125px, $w, 'none');
-
-      // .filter__txt {
-      //   font-size: 25px;
-      //   font-family: $OpenSans;
-      //   position: relative;
-      //   left: 20px;
-      //   bottom: 5px;
-      // }
     }
 
     .cancel-home-btn {
