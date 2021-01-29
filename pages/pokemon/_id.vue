@@ -18,7 +18,7 @@
         :style="{ background: pokTheme === true ? 'black' : 'white' }"
       >
         <nuxt-link
-          to="/"
+          to="/home"
           exact
           no-prefetch
           tag="i"
@@ -111,6 +111,8 @@ import About from '../../components/Card/About.vue'
 import Stat from '../../components/Card/Stat.vue'
 
 export default {
+  layout: 'empty',
+
   data() {
     return {
       txt: 'Параметры',
@@ -229,7 +231,7 @@ export default {
       transition: 0.9s;
       -o-transition: 0.9s;
       -moz-transition: 0.9s;
-      -webkti-transition: 0.9s;
+      -webkit-transition: 0.9s;
 
       &:hover {
         box-shadow: 0 0 20px $w;

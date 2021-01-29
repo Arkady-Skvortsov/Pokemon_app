@@ -1,6 +1,6 @@
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'server', //SSR, "static" - usually websites
+  target: 'server',
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -21,7 +21,7 @@ export default {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: ['~/plugins/vuelidate.js', '~/plugins/firebase.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

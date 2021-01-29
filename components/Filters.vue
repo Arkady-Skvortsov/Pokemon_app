@@ -8,14 +8,12 @@
         class="filter-back-block"
         :style="{ background: theme === true ? 'white' : 'black' }"
       >
-        <nuxt-link
-          to="/"
-          tag="i"
+        <i
           class="material-icons arrow_block"
           :style="{ color: theme === true ? 'black' : 'white' }"
+          @click="ClosePage"
+          >arrow_back</i
         >
-          arrow_back
-        </nuxt-link>
       </button>
 
       <div class="filter-name-block">
@@ -28,166 +26,218 @@
     </div>
 
     <div class="some-settings-block">
-      <!-- v-for будет директива тут, впринципе так же, как и будут выскакивать его дивы -->
-      <div class="settings-index settings">
-        <div>
-          <span
-            class="settings-title"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По индексу</span
-          >
-        </div>
-        <div
-          class="settings-choice-block"
-          @click="shows = shows === false ? true : false"
-          :style="{
-            background: theme === true ? 'black' : 'white',
-            border: theme === true ? '1px solid white' : '1px solid black',
-          }"
-        >
-          <span
-            class="settings-choice"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >Стандартно</span
-          >
-          <i
-            class="material-icons arrow_drop"
-            :style="{
-              transform: shows === true ? 'rotate(0deg)' : 'rotate(180deg)',
-              color: theme === true ? 'white' : 'black',
-            }"
-            >arrow_drop_down</i
-          >
-        </div>
-        <transition-group name="settings-choice-anim" v-if="shows">
-          <div
-            class="settings-choice-block"
-            v-for="(sIdx, index) in settingsIndex"
-            :key="sIdx.id"
-            @click="SortByIndex(index)"
-            :style="{
-              background: theme === true ? 'black' : 'white',
-              border: theme === true ? '1px solid white' : '1px solid black',
-            }"
-          >
-            <!-- Тут тоже будет своеобразный v-for для выбора категорий или условия -->
+      <div class="main-wrap-settings">
+        <!-- v-for будет директива тут, впринципе так же, как и будут выскакивать его дивы -->
+
+        <div class="settings-index settings">
+          <div>
             <span
-              class="settings-choice txt-choice"
+              class="settings-title"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ sIdx.name }}</span
+              >По индексу</span
             >
           </div>
-        </transition-group>
-      </div>
-
-      <div class="settings-name settings">
-        <div>
-          <span
-            class="settings-title"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По имени</span
-          >
-        </div>
-        <div
-          class="settings-choice-block"
-          @click="shows2 = shows2 === false ? true : false"
-          :style="{
-            background: theme === true ? 'black' : 'white',
-            border: theme === true ? '1px solid white' : '1px solid black',
-          }"
-        >
-          <span
-            class="settings-choice"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >Стандартно</span
-          >
-          <i
-            class="material-icons arrow_drop"
-            :style="{
-              transform: shows2 === true ? 'rotate(0deg)' : 'rotate(180deg)',
-              color: theme === true ? 'white' : 'black',
-            }"
-            >arrow_drop_down</i
-          >
-        </div>
-        <transition-group name="settings-choice-anim" v-if="shows2">
           <div
             class="settings-choice-block"
-            v-for="(Name, index) in settingsName"
-            :key="Name.id"
-            @click="SortByName(index)"
-            :style="{
-              background: theme === true ? 'black' : 'white',
-              border: theme === true ? '1px solid white' : '1px solid black',
-            }"
-          >
-            <!--Тут тоже будет своеобразный v-for для выбора категорий или условия-->
-            <span
-              class="settings-choice txt-choice"
-              :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ Name.name }}</span
-            >
-          </div>
-        </transition-group>
-      </div>
-
-      <div class="settings-rasa settings">
-        <div>
-          <span
-            class="settings-title"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >По рассе</span
-          >
-        </div>
-        <div
-          class="settings-choice-block"
-          @click="shows3 = shows3 === false ? true : false"
-          :style="{
-            background: theme === true ? 'black' : 'white',
-            border: theme === true ? '1px solid white' : '1px solid black',
-          }"
-        >
-          <span
-            class="settings-choice"
-            :style="{ color: theme === true ? 'white' : 'black' }"
-            >Стандартно</span
-          >
-          <i
-            class="material-icons arrow_drop"
-            :style="{
-              transform: shows3 === true ? 'rotate(0deg)' : 'rotate(180deg)',
-              color: theme === true ? 'white' : 'black',
-            }"
-            >arrow_drop_down</i
-          >
-        </div>
-        <transition-group name="settings-choice-anim" v-if="shows3">
-          <div
-            class="settings-choice-race-block"
-            v-for="(Race, index) in settingsRace"
-            :key="Race.id"
-            @click="SortByRace(index)"
+            @click="shows = shows === false ? true : false"
             :style="{
               background: theme === true ? 'black' : 'white',
               border: theme === true ? '1px solid white' : '1px solid black',
             }"
           >
             <span
-              class="settings-race-name"
+              class="settings-choice"
               :style="{ color: theme === true ? 'white' : 'black' }"
-              >{{ Race.race }}</span
+              >{{ idxStandart }}</span
             >
-            <div
-              class="choice-pokemon-icon"
+            <i
+              class="material-icons arrow_drop"
               :style="{
-                'background-image': `url(${require('../assets/img/icons/' +
-                  Race.icon)})`,
-                'background-size': 'cover',
-                'background-position': 'center',
+                transform: shows === true ? 'rotate(0deg)' : 'rotate(180deg)',
+                color: theme === true ? 'white' : 'black',
               }"
-            ></div>
+              >arrow_drop_down</i
+            >
           </div>
-        </transition-group>
+          <transition-group name="settings-choice-anim" v-if="shows">
+            <div
+              class="settings-choice-block"
+              v-for="(sIdx, index) in settingsIndex"
+              :key="sIdx.id"
+              @click="SortByIndex(index)"
+              :style="{
+                background: theme === true ? 'white' : 'black',
+                border: theme === true ? '1px solid black' : '1px solid white',
+              }"
+            >
+              <!-- Тут тоже будет своеобразный v-for для выбора категорий или условия -->
+              <span
+                class="settings-choice txt-choice"
+                :style="{ color: theme === true ? 'black' : 'white' }"
+                >{{ sIdx.name }}</span
+              >
+            </div>
+          </transition-group>
+        </div>
+
+        <div class="settings-name settings">
+          <div>
+            <span
+              class="settings-title"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >По имени</span
+            >
+          </div>
+          <div
+            class="settings-choice-block"
+            @click="shows2 = shows2 === false ? true : false"
+            :style="{
+              background: theme === true ? 'black' : 'white',
+              border: theme === true ? '1px solid white' : '1px solid black',
+            }"
+          >
+            <span
+              class="settings-choice"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >{{ nameStandart }}</span
+            >
+            <i
+              class="material-icons arrow_drop"
+              :style="{
+                transform: shows2 === true ? 'rotate(0deg)' : 'rotate(180deg)',
+                color: theme === true ? 'white' : 'black',
+              }"
+              >arrow_drop_down</i
+            >
+          </div>
+          <transition-group name="settings-choice-anim" v-if="shows2">
+            <div
+              class="settings-choice-block"
+              v-for="(Name, index) in settingsName"
+              :key="Name.id"
+              @click="SortByName(index)"
+              :style="{
+                background: theme === true ? 'white' : 'black',
+                border: theme === true ? '1px solid black' : '1px solid white',
+              }"
+            >
+              <span
+                class="settings-choice txt-choice"
+                :style="{ color: theme === true ? 'black' : 'white' }"
+                >{{ Name.name }}</span
+              >
+            </div>
+          </transition-group>
+        </div>
+
+        <div class="settings-generation settings">
+          <div>
+            <span
+              class="settings-title"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >По Покол.</span
+            >
+          </div>
+          <div
+            class="settings-choice-block"
+            @click="shows4 = shows4 === false ? true : false"
+            :style="{
+              background: theme === true ? 'black' : 'white',
+              border: theme === true ? '1px solid white' : '1px solid black',
+            }"
+          >
+            <span
+              class="settings-choice"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >{{ generationStandart }}</span
+            >
+            <i
+              class="material-icons arrow_drop"
+              :style="{
+                transform: shows4 === true ? 'rotate(0deg)' : 'rotate(180deg)',
+                color: theme === true ? 'white' : 'black',
+              }"
+              >arrow_drop_down</i
+            >
+          </div>
+          <transition-group name="settings-choice-anim" v-if="shows4">
+            <div
+              class="settings-choice-block"
+              v-for="(Generation, index) in settingsGeneration"
+              :key="Generation.id"
+              @click="SortByGeneration(index)"
+              :style="{
+                background: theme === true ? 'white' : 'black',
+                border: theme === true ? '1px solid black' : '1px solid white',
+              }"
+            >
+              <span
+                class="settings-race-name"
+                :style="{ color: theme === true ? 'black' : 'white' }"
+                >{{ Generation.name }}</span
+              >
+            </div>
+          </transition-group>
+        </div>
+
+        <div class="settings-rasa settings">
+          <div>
+            <span
+              class="settings-title"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >По рассе</span
+            >
+          </div>
+          <div
+            class="settings-choice-block"
+            @click="shows3 = shows3 === false ? true : false"
+            :style="{
+              background: theme === true ? 'black' : 'white',
+              border: theme === true ? '1px solid white' : '1px solid black',
+            }"
+          >
+            <span
+              class="settings-choice"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >{{ raceStandart }}</span
+            >
+            <i
+              class="material-icons arrow_drop"
+              :style="{
+                transform: shows3 === true ? 'rotate(0deg)' : 'rotate(180deg)',
+                color: theme === true ? 'white' : 'black',
+              }"
+              >arrow_drop_down</i
+            >
+          </div>
+          <transition-group name="settings-choice-anim" v-if="shows3">
+            <div
+              class="settings-choice-race-block"
+              v-for="(Race, index) in settingsRace"
+              :key="Race.id"
+              @click="SortByRace(index)"
+              :style="{
+                background: theme === true ? 'white' : 'black',
+                border: theme === true ? '1px solid black' : '1px solid white',
+              }"
+            >
+              <span
+                class="settings-race-name"
+                :style="{ color: theme === true ? 'black' : 'white' }"
+                >{{ Race.race }}</span
+              >
+              <div
+                class="choice-pokemon-icon"
+                :style="{
+                  'background-image': `url(${require('../assets/img/icons/' +
+                    Race.icon)})`,
+                  'background-size': 'cover',
+                  'background-position': 'center',
+                }"
+              ></div>
+            </div>
+          </transition-group>
+        </div>
       </div>
 
       <div class="settings-with-numbers-block">
@@ -201,7 +251,6 @@
           </div>
 
           <div class="range-slider-block">
-            <!--  :style="{background: theme === true ? 'white' : 'black'}", пусть побудет в разряде бага)) -->
             <input
               type="range"
               class="range-slider health-slider"
@@ -474,6 +523,100 @@
             </div>
           </div>
         </div>
+        <div class="Height-settings-block stat-settings-blocks">
+          <div>
+            <span
+              class="stat-settings-txt"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >По Росту</span
+            >
+          </div>
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider height-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="height.minHeight"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider height-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="height.maxHeight"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ height.minHeight }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ height.maxHeight }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="Weight-settings-block stat-settings-blocks">
+          <div>
+            <span
+              class="stat-settings-txt"
+              :style="{ color: theme === true ? 'white' : 'black' }"
+              >По Весу</span
+            >
+          </div>
+
+          <div class="range-slider-block">
+            <input
+              type="range"
+              class="range-slider weight-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="weight.minWeight"
+              @change="changeParams($event)"
+            />
+            <input
+              type="range"
+              class="range-slider weight-slider"
+              min="0"
+              max="250"
+              step="10"
+              v-model.number="weight.maxWeight"
+              @change="changeParams($event)"
+            />
+          </div>
+
+          <div class="range-stat-block">
+            <div>
+              <span
+                class="range-min-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ weight.minWeight }}</span
+              >
+            </div>
+            <div>
+              <span
+                class="range-max-stat-txt range-stat-txt"
+                :style="{ color: theme === true ? 'white' : 'black' }"
+                >{{ weight.maxWeight }}</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -481,10 +624,17 @@
 
 <script>
 export default {
+  layout: 'empty',
+
+  props: ['pokemons2'],
+
+  emits: ['SortByRace', 'changeParams'],
+
   data: () => ({
     shows: false,
     shows2: false,
     shows3: false,
+    shows4: false,
     health: {
       minHealth: 0,
       maxHealth: 250,
@@ -509,6 +659,24 @@ export default {
       minSpeed: 0,
       maxSpeed: 250,
     },
+
+    height: {
+      //Пока что временные параметры
+      minHeight: 0,
+      maxHeight: 250,
+    },
+
+    weight: {
+      minWeight: 0,
+      maxWeight: 250,
+    },
+
+    pokemons3: [],
+
+    idxStandart: 'Стандартно',
+    nameStandart: 'Стандартно',
+    raceStandart: 'Стандартно',
+    generationStandart: 'Стандартно',
   }),
 
   computed: {
@@ -528,205 +696,132 @@ export default {
       return this.$store.getters['settings/SETTINGSRACE']
     },
 
+    settingsGeneration() {
+      return this.$store.getters['settings/SETTINGSGENERATION']
+    },
+
     POKEMONS() {
-      return this.$store.getters['pokemon/POKEMONS']
+      return this.pokemons2
     },
 
     FilteredPokemons() {
       return this.POKEMONS
     },
+
+    openPage() {
+      return this.$store.getters['theme/SETOPENPAGE']
+    },
+
+    Tags() {
+      return this.$store.getters['pokemon/TAGS']
+    },
   },
 
   methods: {
     SortByIndex(idx) {
-      //С тобой я тоже разберусь
+      const name = 'По индексу'
+
       switch (idx) {
         case 0:
-          this.$store.commit(
-            'pokemon/SETPOKEMONS',
-            this.POKEMONS.sort((a, b) => (a.id -= b.id))
-          )
+          this.pokemons3.sort((a, b) => a.id - b.id)
+
+          this.idxStandart = this.settingsIndex[0].name
           break
         case 1:
-          this.$store.commit(
-            'pokemon/SETPOKEMONS',
-            this.POKEMONS.sort((a, b) => (b.id -= a.id))
-          )
+          this.pokemons3.sort((a, b) => b.id - a.id)
+
+          this.idxStandart = this.settingsIndex[1].name
           break
       }
+
+      if (this.Tags.includes(name)) {
+        return
+      } else {
+        this.$store.dispatch('pokemon/SETTAG', {
+          name,
+          func: this.SortByIndex,
+        })
+      }
+
+      console.log(this.Tags, arguments)
     },
 
     SortByName(idx) {
+      const name = 'По имени'
+
       switch (idx) {
         case 0:
-          this.FilteredPokemons.sort((a, b) =>
+          this.pokemons3.sort((a, b) =>
             a.PokemonName.localeCompare(b.PokemonName)
           )
+
+          this.nameStandart = this.settingsName[0].name
+
           break
         case 1:
-          this.FilteredPokemons.sort((a, b) =>
+          this.pokemons3.sort((a, b) =>
             b.PokemonName.localeCompare(a.PokemonName)
           )
+
+          this.nameStandart = this.settingsName[1].name
+
           break
       }
+
+      if (this.Tags.includes(name)) {
+        return
+      } else {
+        this.$store.dispatch('pokemon/SETTAG', {
+          name,
+          func: this.SortByName,
+        })
+      }
+
+      console.log(this.Tags)
     },
 
     SortByRace(idx) {
+      this.$emit('SortByRace2', idx, this.raceStandart, this.settingsRace)
+    },
+
+    changeParams(e) {
+      this.$emit(
+        'changeParams',
+        e,
+        this.health,
+        this.attack,
+        this.specialAttack,
+        this.defense,
+        this.specialDefense,
+        this.speed,
+        this.height,
+        this.weight
+      )
+    },
+
+    SortByGeneration(idx) {
       switch (idx) {
         case 0:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'normal.png'
-          })
+          this.pokemons3.sort((a, b) =>
+            a.generation.localeCompare(b.generation)
+          )
           break
+
         case 1:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'electric.png'
-          })
-          break
-        case 2:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'fire.png'
-          })
-          break
-        case 3:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'ghosts.png'
-          })
-          break
-        case 4:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'fairy.png'
-          })
-          break
-        case 5:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'rock.png'
-          })
-          break
-        case 6:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'psyhistic.png'
-          })
-          break
-        case 7:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'fighting.png'
-          })
-          break
-        case 8:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'ice.png'
-          })
-          break
-        case 9:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'steel.png'
-          })
-          break
-        case 10:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'water.png'
-          })
-          break
-        case 11:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'flying.png'
-          })
-          break
-        case 12:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'ground.png'
-          })
-          break
-        case 13:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'dragon.png'
-          })
-          break
-        case 14:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'darkness.png'
-          })
-          break
-        case 15:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'poison.png'
-          })
-          break
-        case 16:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'plants.png'
-          })
-          break
-        case 17:
-          this.POKEMONS.filter((item) => {
-            return item.PokemonIcon === 'bug.png'
-          })
+          this.pokemons3.sort((a, b) =>
+            b.generation.localeCompare(a.generation)
+          )
           break
       }
     },
 
-    changeParams(e) {
-      switch (e.target.className) {
-        case 'range-slider health-slider':
-          if (this.health.minHealth > this.health.maxHealth) {
-            const tmp = this.health.maxHealth
-            this.health.maxHealth = this.health.minHealth
-            this.health.minHealth = tmp
-          }
-
-          break
-        case 'range-slider attack-slider':
-          if (this.attack.minAttack > this.attack.maxAttack) {
-            const tmp = this.attack.maxAttack
-            this.attack.maxAttack = this.attack.minAttack
-            this.attack.minAttack = tmp
-          }
-
-          break
-        case 'range-slider special-attack-slider':
-          if (
-            this.specialAttack.minSpecialAttack >
-            this.specialAttack.maxSpecialAttack
-          ) {
-            const tmp = this.specialAttack.maxSpecialAttack
-            this.specialAttack.maxSpecialAttack = this.specialAttack.minSpecialAttack
-            this.specialAttack.minSpecialAttack = tmp
-          }
-
-          break
-        case 'range-slider defense-slider':
-          if (this.defense.minDefense > this.defense.maxDefense) {
-            const tmp = this.defense.maxDefense
-            this.defense.maxDefense = this.defense.minDefense
-            this.defense.minDefense = tmp
-          }
-
-          break
-        case 'range-slider special-defense-slider':
-          if (
-            this.specialDefense.minSpecialDefense >
-            this.specialDefense.maxSpecialDefense
-          ) {
-            const tmp = this.specialDefense.maxSpecialDefense
-            this.specialDefense.maxSpecialDefense = this.specialDefense.minSpecialDefense
-            this.specialDefense.minSpecialDefense = tmp
-          }
-
-          break
-        case 'range-slider speed-slider':
-          if (this.speed.minSpeed > this.speed.maxSpeed) {
-            const tmp = this.speed.maxSpeed
-            this.speed.maxSpeed = this.speed.minSpeed
-            this.speed.minSpeed = tmp
-          }
-          break
-      }
+    ClosePage() {
+      this.$store.dispatch('theme/SETOPENPAGE', false)
     },
   },
 
   mounted() {
-    console.log(this.POKEMONS.length)
+    this.pokemons3 = this.pokemons2
   },
 }
 </script>
@@ -738,6 +833,8 @@ export default {
     width: 100vw;
     background: $w;
     overflow-x: hidden;
+    position: absolute;
+    z-index: 4;
 
     .filter-navbar-block {
       max-width: 240px;
@@ -781,66 +878,72 @@ export default {
     .some-settings-block {
       max-width: 100vw;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
-      .settings {
-        height: 60px;
-        width: 90px;
+      .main-wrap-settings {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
 
-        .settings-title {
-          font-size: 23px;
-          font-family: $OpenSans;
-        }
+        .settings {
+          height: 60px;
+          width: 90px;
 
-        .settings-choice-block {
-          border: 1px solid $b;
-          height: 25px;
-          background: $w;
-          width: inherit;
-          cursor: pointer;
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-
-          .settings-choice {
-            font-size: 16px;
+          .settings-title {
+            font-size: 23px;
             font-family: $OpenSans;
           }
 
-          .txt-choice {
-            font-size: 12px;
-            font-family: $OpenSans;
+          .settings-choice-block {
+            border: 1px solid $b;
+            height: 25px;
+            background: $b;
+            width: 101.5px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: center;
+            justify-content: space-around;
+            align-items: center;
+
+            .settings-choice {
+              font-size: 16px;
+              font-family: $OpenSans;
+            }
+
+            .txt-choice {
+              font-size: 12px;
+              font-family: $OpenSans;
+            }
+
+            .arrow_drop {
+              transition: 0.8s;
+              -o-transition: 0.8s;
+              -webkit-transition: 0.8s;
+              -moz-transition: 0.8s;
+            }
           }
 
-          .arrow_drop {
-            transition: 0.8s;
-            -o-transition: 0.8s;
-            -webkit-transition: 0.8s;
-            -moz-transition: 0.8s;
-          }
-        }
-
-        .settings-choice-race-block {
-          border: $b_black;
-          height: 25px;
-          width: inherit;
-          cursor: pointer;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .settings-race-name {
-            font-size: 12px;
-            font-family: $OpenSans;
-          }
-
-          .choice-pokemon-icon {
-            height: 15px;
-            width: 15px;
-            border-radius: $icon_radius;
+          .settings-choice-race-block {
             border: $b_black;
+            height: 25px;
+            width: 101.5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: $w;
+
+            .settings-race-name {
+              font-size: 12px;
+              font-family: $OpenSans;
+            }
+
+            .choice-pokemon-icon {
+              height: 15px;
+              width: 15px;
+              border-radius: $icon_radius;
+              border: $b_white;
+            }
           }
         }
       }
@@ -848,7 +951,7 @@ export default {
 
     .settings-with-numbers-block {
       max-width: 200px;
-      margin: 10px auto;
+      margin: 45px auto;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -898,7 +1001,7 @@ export default {
           height: 15px;
           -webkit-appearance: none;
           width: 15px;
-          z-index: 2;
+          z-index: 1;
           color: black;
           position: relative;
           border-radius: 10px;

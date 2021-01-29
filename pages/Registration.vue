@@ -1,22 +1,22 @@
 <template>
   <div
-    class="main-login-block"
+    class="main-registration-block"
     :style="{
       'background-image': `url(
                 ${require('../assets/img/pockemons/types_background/JPG/electric.jpg')}
               )`,
     }"
   >
-    <div class="login-title">
-      <h1 class="title">Login</h1>
+    <div class="registration-title">
+      <h1 class="title">Registration</h1>
     </div>
 
-    <div class="login-process-block">
+    <div class="registration-process-block">
       <form>
-        <div class="email-login">
+        <div class="email-registration">
           <input
             type="text"
-            placeholder="Введите свой email"
+            placeholder="Создайте свой email"
             class="email inputs"
             v-model.trim="email"
             :style="{
@@ -29,10 +29,10 @@
           />
         </div>
 
-        <div class="password-login">
+        <div class="password-registration">
           <input
             type="password"
-            placeholder="Введите свой password"
+            placeholder="Создайте свой password"
             class="password inputs"
             v-model.trim="password"
             :style="{
@@ -46,17 +46,15 @@
           />
         </div>
 
-        <button class="login-button inputs" @click.prevent="LogIn">
-          Войти
+        <button class="registration-button" @click.prevent="Registration">
+          Зарегистрир.
         </button>
       </form>
     </div>
 
-    <div class="registration-href">
-      <span>Нет аккаунта?</span>
-      <nuxt-link to="/Registration" tag="span" class="registr">
-        Зарагистрироваться
-      </nuxt-link>
+    <div class="login-href">
+      <span>Есть аккаунт?</span>
+      <nuxt-link to="/" tag="span" class="log"> Войти </nuxt-link>
       <!-- Dynamically param -->
     </div>
   </div>
@@ -64,13 +62,9 @@
 
 <script>
 import { email, required, minLength, maxLength } from 'vuelidate/lib/validators'
-import Notification from '../components/Notification'
+import firebase from 'firebase/app'
 
 export default {
-  compontens: {
-    Notification,
-  },
-
   layout: 'empty',
 
   data: () => ({
@@ -84,7 +78,7 @@ export default {
   },
 
   methods: {
-    async LogIn() {
+    Registration() {
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
@@ -96,27 +90,24 @@ export default {
       }
 
       try {
-        await this.$store.dispatch('auth/Login', formData)
+        this.$store.dispatch('auth/Register', formData)
+
         this.$router.push('/home')
       } catch (e) {}
     },
-  },
-
-  mounted() {
-    console.log(this.$v.password, this.$v.email.$dirty)
   },
 }
 </script>
 
 <style lang="scss">
-.main-login-block {
+.main-registration-block {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
   background-position: center;
   background-size: cover;
 
-  .login-title {
+  .registration-title {
     margin: 5px auto;
     display: flex;
     justify-content: center;
@@ -129,23 +120,23 @@ export default {
     }
   }
 
-  .login-process-block {
+  .registration-process-block {
     display: flex;
     justify-content: center;
     align-items: space-between;
     margin: 0 auto;
 
-    .email-login {
+    .email-registration {
       .email {
         height: $b_hAndw;
         width: $b_width;
         font-size: 20px;
         font-family: $Orienta;
-        border: 1px solid green;
+        border: $b_black;
       }
     }
 
-    .password-login {
+    .password-registration {
       .password {
         height: $b_hAndw;
         width: $b_width;
@@ -157,14 +148,9 @@ export default {
 
     .inputs {
       margin: 20px;
-      border: 1px solid $r;
-      transition: 0.7s;
-      -o-transition: 0.7s;
-      -moz-transition: 0.7s;
-      -webkit-transition: 0.7s;
     }
 
-    .login-button {
+    .registration-button {
       background: $b;
       cursor: pointer;
       font-size: 25px;
@@ -177,7 +163,7 @@ export default {
     }
   }
 
-  .registration-href {
+  .login-href {
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -188,7 +174,7 @@ export default {
       font-family: $Orienta;
     }
 
-    .registr {
+    .log {
       cursor: pointer;
       color: $w;
     }

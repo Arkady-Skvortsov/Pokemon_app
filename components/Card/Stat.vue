@@ -226,8 +226,8 @@ export default {
       background: $w;
 
       .detail-statistic-child {
-        //width: 65%;
-        width: 0;
+        width: 65%;
+        height: inherit;
         background: green;
         height: inherit;
         display: flex;

@@ -3,6 +3,7 @@ export const state = () => ({
   changeIcon: 'wb_sunny',
   changeSearch: false,
   backgroundTheme: '',
+  openPage: false,
 })
 
 export const mutations = {
@@ -20,6 +21,10 @@ export const mutations = {
 
   SETBACKGROUNDTHEME(state, theme) {
     state.backgroundTheme = theme
+  },
+
+  SETOPENPAGE(state, theme) {
+    state.openPage = theme
   },
 }
 
@@ -39,6 +44,10 @@ export const actions = {
   SETBACKGROUNDTHEME({ commit }, theme) {
     commit('SETBACKGROUNDTHEME', theme)
   },
+
+  SETOPENPAGE({ commit }, theme) {
+    commit('SETOPENPAGE', theme)
+  },
 }
 
 export const getters = {
@@ -46,4 +55,5 @@ export const getters = {
   CHANGEICON: (s) => s.changeIcon,
   CHANGESEARCH: (s) => s.changeSearch,
   BACKGROUNDTHEME: (s) => s.backgroundTheme,
+  OPENPAGE: (s) => s.openPage,
 }

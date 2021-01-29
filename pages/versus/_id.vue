@@ -4,189 +4,205 @@
     :style="{ background: VStheme ? 'black' : 'white' }"
   >
     <div class="versus-pokemon-block">
-      <div
-        class="first-versus-pokemon-block"
-        :style="{
-          background: VStheme ? 'black' : 'white',
-          border: VStheme ? 'black' : 'white',
-        }"
-        @click="showBtn"
-      >
+      <div class="pokemons">
         <div
-          class="pokemon-header"
+          class="first-versus-pokemon-block"
           :style="{
-            borderBottom: VStheme ? '1px solid white' : '1px solid black',
+            background: VStheme ? 'black' : 'white',
+            border: VStheme ? '1px solid white' : '1px solid black',
           }"
+          @click="showBtn"
         >
-          <div class="pokemon-index-block">
-            <span
-              class="pokemon-index"
-              :style="{ color: VStheme ? 'white' : 'black' }"
-              >#{{ first_pokemon.id }}</span
-            >
-          </div>
-
           <div
-            class="pokemon-icon-block"
+            class="pokemon-header"
             :style="{
-              background: `url(${require(`../../assets/img/icons/` +
-                first_pokemon.PokemonIcon)})`,
-              'background-size': 'cover',
-              'background-position': 'center',
-              border: VStheme ? '1px solid white' : '1px solid black',
-            }"
-          ></div>
-        </div>
-        <div
-          class="pokemon-wrapper__body"
-          :style="{
-            'background-image': `url(${require(`../../assets/img/pockemons/first_generation/${first_pokemon.PokemonBackground}`)})`,
-            'background-size': 'cover',
-            'background-position': 'center',
-            borderBottom: VStheme ? '1px solid white' : '1px solid black',
-            borderTop: VStheme ? '1px solid white' : '1px solid black',
-          }"
-        >
-          <transition name="back-icon">
-            <button
-              class="back-icon-block"
-              v-if="backShow"
-              @click="GoBack"
-              :style="{
-                background: VStheme ? 'black' : 'white',
-                color: VStheme ? 'white' : 'black',
-              }"
-            >
-              <i class="material-icons icon-back">arrow_back</i>
-            </button>
-          </transition>
-        </div>
-        <div class="pokemon-wrapper__footer">
-          <div
-            class="footer-name-block"
-            :style="{ background: VStheme ? 'black' : 'white' }"
-          >
-            <span
-              class="pokemon-name"
-              :style="{ color: VStheme ? 'white' : 'black' }"
-              >{{ first_pokemon.PokemonName | Upper }}</span
-            >
-          </div>
-          <div
-            class="footer-type-block"
-            :style="{
-              'background-image': `url(${require(`../../assets/img/pockemons/types_background/JPG/${first_pokemon.PokemonTypeBackground}`)})`,
-              'background-size': 'cover',
-              'background-position': 'center',
-              borderTop: VStheme ? '1px solid white' : '1px solid black',
+              borderBottom: VStheme ? '1px solid white' : '1px solid black',
             }"
           >
-            <span
-              class="pokemon-type"
-              :style="{ color: VStheme ? 'white' : 'black' }"
-              >{{ first_pokemon.PokemonType }}</span
-            >
-          </div>
-        </div>
-      </div>
-
-      <div class="vs-txt">
-        <span :style="{ color: VStheme ? 'white' : 'black' }">VS</span>
-      </div>
-
-      <div class="second-versus-pokemon-block">
-        <div
-          class="second-header"
-          v-if="!Object.keys(GetVSpokemon).length"
-          :style="{ background: VStheme ? 'black' : 'white' }"
-        >
-          <button
-            class="btn-block"
-            @click="Add"
-            :style="{
-              background: VStheme ? 'white' : 'black',
-              color: VStheme ? 'black' : 'white',
-            }"
-          >
-            <i class="material-icons plus-btn">add</i>
-          </button>
-        </div>
-
-        <div
-          class="second-header-second"
-          v-else
-          :style="{ border: VStheme ? 'white' : 'black' }"
-        >
-          <div class="second-pokemon-header">
-            <div class="pokemon-second-index-block">
+            <div class="pokemon-index-block">
               <span
-                class="pokemon-second-index"
+                class="pokemon-index"
                 :style="{ color: VStheme ? 'white' : 'black' }"
-                >#{{ GetVSpokemon.id }}</span
+                >#{{ first_pokemon.id }}</span
               >
             </div>
 
             <div
-              class="pokemon-second-icon-block"
+              class="pokemon-icon-block"
               :style="{
-                'background-image': `url(${require('../../assets/img/icons/' +
-                  GetVSpokemon.PokemonIcon)})`,
+                background: `url(${require(`../../assets/img/icons/` +
+                  first_pokemon.PokemonIcon)})`,
                 'background-size': 'cover',
                 'background-position': 'center',
                 border: VStheme ? '1px solid white' : '1px solid black',
               }"
             ></div>
           </div>
-
           <div
-            class="pokemon-second-wrapper__body"
+            class="pokemon-wrapper__body"
             :style="{
-              'background-image': `url(${require('../../assets/img/pockemons/first_generation/' +
-                GetVSpokemon.PokemonBackground)})`,
+              'background-image': `url(${require(`../../assets/img/pockemons/first_generation/${first_pokemon.PokemonBackground}`)})`,
               'background-size': 'cover',
               'background-position': 'center',
-              border: VStheme ? '1px solid white' : '1px solid black',
+              borderBottom: VStheme ? '1px solid white' : '1px solid black',
+              borderTop: VStheme ? '1px solid white' : '1px solid black',
             }"
           >
-            <div class="add-btn-block">
+            <transition name="back-icon">
               <button
-                class="btn-block"
-                @click="GoAway"
+                class="back-icon-block"
+                v-if="backShow"
+                @click="GoBack"
                 :style="{
-                  background: VStheme ? 'white' : 'black',
-                  color: VStheme ? 'black' : 'white',
+                  background: VStheme ? 'black' : 'white',
+                  color: VStheme ? 'white' : 'black',
+                  border: VStheme ? '1px solid white' : '1px solid black',
                 }"
               >
-                <i class="material-icons close-btn">close</i>
+                <i class="material-icons icon-back">arrow_back</i>
               </button>
-            </div>
+            </transition>
           </div>
-          <div class="pokemon-second-wrapper__footer">
+          <div class="pokemon-wrapper__footer">
             <div
-              class="footer-second-name-block"
+              class="footer-name-block"
               :style="{ background: VStheme ? 'black' : 'white' }"
             >
               <span
-                class="pokemon-second-name"
+                class="pokemon-name"
                 :style="{ color: VStheme ? 'white' : 'black' }"
-                >{{ GetVSpokemon.PokemonName | Upper }}</span
+                >{{ first_pokemon.PokemonName | Upper }}</span
               >
+            </div>
+            <div
+              class="footer-type-block"
+              :style="{
+                'background-image': `url(${require(`../../assets/img/pockemons/types_background/JPG/${first_pokemon.PokemonTypeBackground}`)})`,
+                'background-size': 'cover',
+                'background-position': 'center',
+                borderTop: VStheme ? '1px solid white' : '1px solid black',
+              }"
+            >
+              <span
+                class="pokemon-type"
+                :style="{ color: VStheme ? 'white' : 'black' }"
+                >{{ first_pokemon.PokemonType }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="vs-txt">
+          <span :style="{ color: VStheme ? 'white' : 'black' }">VS</span>
+        </div>
+
+        <div
+          class="second-versus-pokemon-block"
+          :style="{
+            background: VStheme ? 'black' : 'white',
+            border: VStheme ? '1px solid white' : '1px solid black',
+          }"
+        >
+          <div
+            class="second-header"
+            v-if="!Object.keys(GetVSpokemon).length"
+            :style="{
+              borderBottom: VStheme ? '1px solid white' : '1px solid black',
+              background: VStheme ? 'black' : 'white',
+            }"
+          >
+            <button
+              class="btn-block"
+              @click="Add"
+              :style="{
+                background: VStheme ? 'black' : 'white',
+                color: VStheme ? 'white' : 'black',
+                border: VStheme ? '1px solid white' : '1px solid black',
+              }"
+            >
+              <i class="material-icons plus-btn">add</i>
+            </button>
+          </div>
+
+          <div
+            class="second-header-second"
+            v-else
+            :style="{
+              borderBottom: VStheme ? '1px solid white' : '1px solid black',
+            }"
+          >
+            <div class="second-pokemon-header">
+              <div class="pokemon-second-index-block">
+                <span
+                  class="pokemon-second-index"
+                  :style="{ color: VStheme ? 'white' : 'black' }"
+                  >#{{ GetVSpokemon.id }}</span
+                >
+              </div>
 
               <div
-                class="footer-second-type-block"
+                class="pokemon-second-icon-block"
                 :style="{
-                  'background-image': `url(${require('../../assets/img/pockemons/types_background/JPG/' +
-                    GetVSpokemon.PokemonTypeBackground)})`,
+                  'background-image': `url(${require('../../assets/img/icons/' +
+                    GetVSpokemon.PokemonIcon)})`,
                   'background-size': 'cover',
                   'background-position': 'center',
-                  borderTop: VStheme ? '1px solid white' : '1px solid black',
+                  border: VStheme ? '1px solid white' : '1px solid black',
                 }"
+              ></div>
+            </div>
+
+            <div
+              class="pokemon-second-wrapper__body"
+              :style="{
+                'background-image': `url(${require('../../assets/img/pockemons/first_generation/' +
+                  GetVSpokemon.PokemonBackground)})`,
+                'background-size': 'cover',
+                'background-position': 'center',
+                border: VStheme ? '1px solid white' : '1px solid black',
+              }"
+            >
+              <div class="add-btn-block">
+                <button
+                  class="btn-block"
+                  @click="GoAway"
+                  :style="{
+                    background: VStheme ? 'black' : 'white',
+                    color: VStheme ? 'white' : 'black',
+                    border: VStheme ? '1px solid white' : '1px solid black',
+                  }"
+                >
+                  <i class="material-icons close-btn">close</i>
+                </button>
+              </div>
+            </div>
+            <div class="pokemon-second-wrapper__footer">
+              <div
+                class="footer-second-name-block"
+                :style="{ background: VStheme ? 'black' : 'white' }"
               >
                 <span
-                  class="pokemon-second-type"
+                  class="pokemon-second-name"
                   :style="{ color: VStheme ? 'white' : 'black' }"
-                  >{{ GetVSpokemon.PokemonType }}</span
+                  >{{ GetVSpokemon.PokemonName | Upper }}</span
                 >
+
+                <div
+                  class="footer-second-type-block"
+                  :style="{
+                    'background-image': `url(${require('../../assets/img/pockemons/types_background/JPG/' +
+                      GetVSpokemon.PokemonTypeBackground)})`,
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                    borderTop: VStheme ? '1px solid white' : '1px solid black',
+                  }"
+                >
+                  <span
+                    class="pokemon-second-type"
+                    :style="{ color: VStheme ? 'white' : 'black' }"
+                    >{{ GetVSpokemon.PokemonType }}</span
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -195,7 +211,7 @@
 
       <div>
         <!-- Потом поставлю его чуть по другому -->
-        <Notification v-if="message !== ''" :mess="message" @Close="Close" />
+        <Notification v-if="notification.notErr.txt !== ''" @Close="Close" />
       </div>
 
       <div class="list-versus-items-block">
@@ -209,7 +225,11 @@
             class="vs-blocks"
             @click="changeCategory(idx)"
             :style="{
-              background: !Object.keys(GetVSpokemon).length ? 'grey' : 'black',
+              background: !Object.keys(GetVSpokemon).length
+                ? 'grey'
+                : 'black' && VStheme
+                ? 'white'
+                : 'black',
             }"
             :disabled="!Object.keys(GetVSpokemon).length"
           >
@@ -231,6 +251,8 @@ import Upper from '../../filters/Upper.js'
 import Notification from '../../components/Notification.vue'
 
 export default {
+  layout: 'empty',
+
   components: {
     Notification,
   },
@@ -274,11 +296,13 @@ export default {
     this.$store.dispatch('pokemon/GETFIRSTVSPOKEMON', this.first_pokemon)
 
     this.$store.dispatch('pokemon/SAVINGTHEPATH', this.$route.params.id)
+
+    console.log(this.VSHISTORY, this.$route.fullPath)
   },
 
   methods: {
     Close() {
-      this.$store.dispatch('pokemon/GETVSMESSAGE', '')
+      this.$store.dispatch('pokemon/GETVSNOTIFICATION', '')
     },
 
     showBtn() {
@@ -292,7 +316,7 @@ export default {
 
       this.$store.dispatch('pokemon/CLEARVSPOKEMON')
 
-      this.$store.dispatch('pokemon/GETVSMESSAGE', '')
+      this.$store.dispatch('pokemon/GETVSNOTIFICATION', '')
 
       this.$router.go(-1)
     },
@@ -308,31 +332,64 @@ export default {
         this.$store.dispatch('theme/SETBACKGROUNDTHEME', value3)
 
         this.$store.dispatch(
-          'pokemon/GETVSMESSAGE',
+          'pokemon/GETVSNOTIFICATION',
           `${Upper(this.first_pokemon.PokemonName)} оказался лучше ${Upper(
             this.GetVSpokemon.PokemonName
-          )} в показателе ${txt} на ${variable}%`
+          )} в показателе "${txt}" на ${variable}%`
         )
+
+        setTimeout(() => {
+          this.$store.dispatch('pokemon/SETHISTORY', {
+            Fpokemon: this.first_pokemon,
+            Spokemon: this.GetVSpokemon,
+            date: new Date().toString(),
+            text: `${this.first_pokemon.PokemonName.toUpperCase()} оказался лучше ${this.GetVSpokemon.PokemonName.toUpperCase()} в показателе "${txt}" на ${variable}%`,
+            background: value3,
+            path: this.$route.fullPath,
+          })
+        }, 100)
       } else if (value2 > value1) {
         variable = parseFloat((value2 - tmp) / 100)
 
         this.$store.dispatch('theme/SETBACKGROUNDTHEME', value4)
 
         this.$store.dispatch(
-          'pokemon/GETVSMESSAGE',
+          'pokemon/GETVSNOTIFICATION',
           `${Upper(this.GetVSpokemon.PokemonName)} оказался лучше ${Upper(
             this.first_pokemon.PokemonName
-          )} в показателе ${txt} на ${variable}%`
+          )} в показателе "${txt}" на ${variable}%`
         )
+
+        setTimeout(() => {
+          this.$store.dispatch('pokemon/SETHISTORY', {
+            Fpokemon: this.GetVSpokemon,
+            Spokemon: this.first_pokemon,
+            date: new Date().toString(),
+            text: `${this.GetVSpokemon.PokemonName.toUpperCase()} оказался лучше ${this.first_pokemon.PokemonName.toUpperCase()} в показателе "${txt}" на ${variable}%`,
+            background: value4,
+            path: this.$route.fullPath,
+          })
+        }, 100)
       } else {
         this.$store.dispatch('theme/SETBACKGROUNDTHEME', value3)
 
         this.$store.dispatch(
-          'pokemon/GETVSMESSAGE',
+          'pokemon/GETVSNOTIFICATION',
           `${Upper(this.first_pokemon.PokemonName)} и ${Upper(
             this.GetVSpokemon.PokemonName
-          )} оказались равны в показателе ${txt}`
+          )} оказались равны в показателе "${txt}"`
         )
+
+        setTimeout(() => {
+          this.$store.dispatch('pokemon/SETHISTORY', {
+            Fpokemon: this.first_pokemon,
+            Spokemon: this.GetVSpokemon,
+            date: new Date().toString(),
+            text: `${this.first_pokemon.PokemonName.toUpperCase()} и ${this.GetVSpokemon.PokemonName.toUpperCase()} оказались равны в показателе "${txt}"`,
+            background: value3,
+            path: this.$route.fullPath,
+          })
+        }, 100)
 
         variable = 0
       }
@@ -351,6 +408,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
           case 1:
             this.VersusStats(
@@ -360,6 +419,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
           case 2:
             this.VersusStats(
@@ -369,6 +430,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
           case 3:
             this.VersusStats(
@@ -378,6 +441,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
           case 4:
             this.VersusStats(
@@ -387,6 +452,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
           case 5:
             this.VersusStats(
@@ -396,6 +463,8 @@ export default {
               this.first_pokemon.PokemonTypeBackground,
               this.GetVSpokemon.PokemonTypeBackground
             )
+
+            console.log(this.$store.getters['pokemon/VSHISTORY'])
             break
         }
       }
@@ -404,20 +473,20 @@ export default {
     Add() {
       this.$store.dispatch('pokemon/CHANGESTATE', true)
 
-      this.$store.dispatch('pokemon/GETVSMESSAGE', '')
+      this.$store.dispatch('pokemon/GETVSNOTIFICATION', '')
 
-      this.$router.replace('/')
+      this.$router.replace('/home')
     },
 
     GoAway() {
       this.$store.dispatch('pokemon/CLEARVSPOKEMON')
 
-      this.$store.dispatch('pokemon/GETVSMESSAGE', '')
+      this.$store.dispatch('pokemon/GETVSNOTIFICATION', '')
 
       this.$store.dispatch('pokemon/CHANGESTATE', true)
 
       setTimeout(() => {
-        this.$router.replace('/')
+        this.$router.replace('/home')
       }, 100)
     },
   },
@@ -435,8 +504,12 @@ export default {
       return this.$store.getters['pokemon/VSPOKEMON']
     },
 
-    message() {
-      return this.$store.getters['pokemon/VSMESSAGE']
+    notification() {
+      return this.$store.getters['pokemon/VSNOTIFICATION']
+    },
+
+    VSHISTORY() {
+      return this.$store.getters['pokemon/VSHISTORY']
     },
   },
 }
@@ -450,9 +523,17 @@ export default {
     width: 100%;
 
     .versus-pokemon-block {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: space-around;
+      // align-items: center;
+
+      .pokemons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
 
       .first-versus-pokemon-block {
         height: $card_height;
@@ -505,7 +586,7 @@ export default {
         }
 
         .pokemon-wrapper__footer {
-          height: 63px;
+          height: 62px;
           max-width: $card_width_2;
           background: $w;
           display: flex;
@@ -557,16 +638,19 @@ export default {
       .second-versus-pokemon-block {
         height: $card_height;
         width: $card_width_2;
+        background: $w;
         margin: 10px;
         cursor: pointer;
         border-radius: $card_radius;
+        border-radius: $card_radius;
+        border: $b_black;
 
         .second-header {
-          background: $b;
+          background: $w;
           height: $card_height;
           width: $card_width_2;
           border-radius: $card_radius;
-          border: $b_black;
+          border-bottom: $b_black;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -577,7 +661,7 @@ export default {
         }
 
         .second-header-second {
-          border: $b_black;
+          border-bottom: $b_black;
 
           .second-pokemon-header {
             border-top-right-radius: $card_radius;
@@ -608,26 +692,20 @@ export default {
 
           .pokemon-second-wrapper__body {
             height: 150px;
-            max-width: $card_width_2;
+            max-width: 160px;
             border-top: $b_black;
             border-bottom: $b_black;
             display: flex;
             justify-content: center;
             align-items: center;
 
-            .add-btn-block {
-              // display: flex;
-              // align-items: center;
-              // justify-content: center;
-
-              .btn-block {
-                @include button;
-              }
+            .btn-block {
+              @include button;
             }
           }
 
           .pokemon-second-wrapper__footer {
-            height: 63px;
+            height: 62px; //63px
             max-width: $card_width_2;
             background: $w;
             display: flex;
@@ -636,17 +714,21 @@ export default {
             border-bottom-left-radius: $card_radius;
 
             .footer-second-name-block {
-              height: 25px;
-              max-width: $card_width_2;
+              height: 25px; //25px
+              width: $card_width_2;
               text-align: center;
+              position: relative;
+              padding: 9px 0;
               font-size: 15px;
               font-family: $Orienta;
-              border-bottom: $b_black;
+              border-bottom: $b;
             }
 
             .footer-second-type-block {
-              height: 39px;
+              height: 36px; //39px
               max-width: $card_width_2;
+              border-bottom-right-radius: $card_radius;
+              border-bottom-left-radius: $card_radius;
               text-align: center;
               font-size: $f_size3;
               font-family: $Orienta;
@@ -657,6 +739,7 @@ export default {
 
       .list-versus-items-block {
         max-width: 200px;
+        margin: 0 auto;
 
         .vs-txt-block {
           display: flex;

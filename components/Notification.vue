@@ -2,7 +2,7 @@
   <transition name="notification">
     <!-- Починю анимацию -->
     <div
-      v-if="false"
+      v-if="notif.notErr.txt.length"
       class="main-notification-block"
       :style="{
         backgroundImage: `url(${require(`../assets/img/pockemons/types_background/JPG/${back}`)})`,
@@ -13,7 +13,7 @@
           <i class="material-icons cl" @click="Close">close</i>
         </div>
         <div class="txt-block">
-          <span class="text">{{ mess }}</span>
+          <span class="text">{{ notif.notErr.txt }}</span>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="txt-warning-block">
-        <span class="text-warning">{{ mess }}</span>
+        <span class="text-warning">{{ notif.err.txt }}</span>
       </div>
     </div>
   </transition>
@@ -35,13 +35,6 @@
 
 <script>
 export default {
-  props: {
-    mess: {
-      type: String,
-      required: true,
-    },
-  },
-
   methods: {
     Close() {
       this.$emit('Close')
@@ -52,16 +45,33 @@ export default {
     back() {
       return this.$store.getters['theme/BACKGROUNDTHEME']
     },
+
+    notif() {
+      return this.$store.getters['pokemon/VSNOTIFICATION']
+    },
   },
 }
 </script>
 
 <style lang="scss">
+.notification-enter {
+  opacity: 0;
+}
+
+.notification-enter-active {
+  transition: opacity 0.9s;
+}
+
+.notification-leave {
+  opacity: 1;
+}
+
 .main-notification-block {
   height: 100px;
   width: 450px;
   background-position: center;
   background-size: cover;
+  margin: 0 auto;
 
   .notification-block {
     display: flex;
@@ -96,7 +106,7 @@ export default {
     }
 
     .txt-block {
-      margin: -15px 50px;
+      margin: -25px 50px;
 
       .text {
         font-family: $Orienta;
@@ -105,36 +115,12 @@ export default {
       }
     }
   }
-
-  .notification-enter {
-    opacity: 0;
-    transform: translateY(-100px);
-  }
-
-  .notification-enter-active,
-  .notification-leave-active {
-    transition: transform 0.8s, opacity 0.8s;
-  }
-
-  .notification-enter-to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-
-  .notification-leave {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-
-  .notification-leave-to {
-    opacity: 0;
-    transform: translateY(-100px);
-  }
 }
 
 .warning-notification-block {
   height: 100px;
   width: 350px;
+  margin: 0px auto;
   border-radius: $block_radius;
   display: flex;
   flex-direction: column;

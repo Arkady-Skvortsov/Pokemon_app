@@ -1,13 +1,24 @@
+import firebase from 'firebase/app'
+
 export const state = () => ({
   choicePokemon: false,
   vs_pokemon: {},
   first_vs_pokemon: {},
-  vs_message: '',
+  vs_notification: {
+    err: {
+      txt: '',
+    },
+    notErr: {
+      txt: '',
+    },
+  },
   searchPokemon: '',
   statPokemonParams: {},
   aboutPokemonParams: '',
   savePath: 0,
   pokemons: [],
+  tags: [],
+  vs_history: [],
 })
 
 export const mutations = {
@@ -51,8 +62,28 @@ export const mutations = {
     state.first_vs_pokemon = newPok
   },
 
-  GETVSMESSAGE(state, mess) {
-    state.vs_message = mess
+  GETERRNOTIFICATION(state, err) {
+    state.vs_notification.err.txt = err
+  },
+
+  GETVSNOTIFICATION(state, mess) {
+    state.vs_notification.notErr.txt = mess
+  },
+
+  SETTAG(state, tag) {
+    state.tags.push(tag)
+  },
+
+  CLEARTAG(state, tag2) {
+    state.tags.splice(tag2, 1)
+  },
+
+  SETHISTORY(state, hist) {
+    state.vs_history.push(hist)
+  },
+
+  CLEARHISTORY(state) {
+    state.vs_history.splice(0, state.vs_history.length)
   },
 }
 
@@ -86,17 +117,69 @@ export const actions = {
   },
 
   async GETPOKEMONS({ commit }) {
-    const pokemons = await this.$axios.$get('http://localhost:3000/pokemons')
+    const pokem = await this.$axios.$get('http://localhost:3000/pokemons')
+    commit('GETPOKEMONS', pokem)
+  },
 
-    commit('GETPOKEMONS', pokemons)
+  SETPOKEMONS({ commit }, pokem) {
+    //Нужно будет удалить!
+    commit('SETPOKEMONS', pokem)
   },
 
   GETFIRSTVSPOKEMON({ commit }, newPok) {
     commit('GETFIRSTVSPOKEMON', newPok)
   },
 
-  GETVSMESSAGE({ commit }, mess) {
-    commit('GETVSMESSAGE', mess)
+  GETERRNOTIFICATION({ commit }, err) {
+    commit('GETERRNOTIFICATION', err)
+  },
+
+  GETVSNOTIFICATION({ commit }, mess) {
+    commit('GETVSNOTIFICATION', mess)
+  },
+
+  SETTAG({ commit }, tag) {
+    commit('SETTAG', tag)
+  },
+
+  CLEARTAG({ commit }, tag2) {
+    commit('CLEARTAG', tag2)
+  },
+
+  async SETHISTORY({ commit, dispatch, state }, hist) {
+    try {
+      const uid = await dispatch('getUid')
+
+      await firebase.database().ref(`users/${uid}/addedPokemons`).push(hist)
+
+      await firebase
+        .database()
+        .ref(`users/${uid}/addedPokemons`)
+        .on('value', (snapshot) => {
+          state.vs_history = snapshot.val()
+        })
+    } catch (e) {
+      commit('setError', e)
+
+      throw e
+    }
+  },
+
+  async CLEARHISTORY({ commit, dispatch, state }) {
+    try {
+      const uid = await dispatch('getUid')
+
+      commit('CLEARHISTORY')
+    } catch (e) {
+      commit('setError', e)
+
+      throw e
+    }
+  },
+
+  getUid() {
+    const user = firebase.auth().currentUser
+    return user ? user.uid : null
   },
 }
 
@@ -109,5 +192,8 @@ export const getters = {
   ABOUTPOKEMONPARAMS: (s) => s.aboutPokemonParams,
   SAVEPATH: (s) => s.savePath,
   POKEMONS: (s) => s.pokemons,
-  VSMESSAGE: (s) => s.vs_message,
+  VSNOTIFICATION: (s) => s.vs_notification,
+  TAGS: (s) => s.tags,
+  VSHISTORY: (s) => s.vs_history,
+  TAGSOBJ: (s) => Object.fromEntries(s.tags),
 }

@@ -40,7 +40,7 @@
           borderTop: theme ? '1px solid white' : '1px solid black',
         }"
       >
-        <Plus @ChooseYou="ChooseYou" :hideShow="choiceP2" />
+        <Plus :hideShow="choiceP2" />
       </div>
       <div class="pokemon-wrapper__footer">
         <div
@@ -111,10 +111,6 @@ export default {
   methods: {
     GoToParams() {
       this.$emit('GoToParams', this.CardInfo)
-    },
-
-    ChooseYou() {
-      this.$emit('ChooseYou', this.CardInfo)
     },
   },
 }
@@ -189,7 +185,7 @@ export default {
     }
 
     .pokemon-wrapper__footer {
-      height: 63px; //63px
+      height: 62.5px;
       max-width: $card_width_1;
       background: $w;
       display: flex;
