@@ -45,11 +45,11 @@ export default {
     color: 'orange',
   },
 
-  publicRuntimeConfig: {
-    axios: {
-      baseURL: 'http://localhost:3000/pokemons',
-    },
-  },
+  // publicRuntimeConfig: {
+  //   axios: {
+  //     baseURL: 'http://localhost:3000/pokemons',
+  //   },
+  // },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

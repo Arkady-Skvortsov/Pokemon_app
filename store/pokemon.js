@@ -117,8 +117,12 @@ export const actions = {
   },
 
   async GETPOKEMONS({ commit }) {
-    const pokem = await this.$axios.$get('http://localhost:3000/pokemons')
-    commit('GETPOKEMONS', pokem)
+    await firebase
+      .database()
+      .ref('Pokemons/')
+      .once('value', (data) => {
+        commit('GETPOKEMONS', data.val())
+      })
   },
 
   SETPOKEMONS({ commit }, pokem) {

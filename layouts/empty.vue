@@ -19,7 +19,7 @@ export default {
   watch: {
     error(fbError) {
       //Сделаю что-нибудь в Notification.vue.. Да, сделаю что-нибудь в уведомлениях
-      this.$error(messages[fbError.code] || 'Что-то пошло не так')
+      console.log(messages[fbError.code] || 'Что-то пошло не так')
     },
   },
 }

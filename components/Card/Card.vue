@@ -22,8 +22,7 @@
         <div
           class="header-icon-block"
           :style="{
-            'background-image': `url(${require('../../assets/img/icons/' +
-              CardInfo.PokemonIcon)})`,
+            'background-image': `url(${icon})`,
             'background-size': 'cover',
             'background-position': 'center',
             border: theme ? '1px solid white' : '1px solid black',
@@ -33,7 +32,7 @@
       <div
         class="pokemon-wrapper__body"
         :style="{
-          'background-image': `url(${require(`../../assets/img/pockemons/first_generation/${CardInfo.PokemonBackground}`)})`,
+          'background-image': `url(${background})`,
           'background-size': 'cover',
           'background-position': 'center',
           borderBottom: theme ? '1px solid white' : '1px solid black',
@@ -56,7 +55,7 @@
         <div
           class="footer-type-block"
           :style="{
-            'background-image': `url(${require(`../../assets/img/pockemons/types_background/JPG/${CardInfo.PokemonTypeBackground}`)}`,
+            'background-image': `url(${backgroundType}}`,
             'background-size': 'cover',
             'background-position': 'center',
             borderTop: theme ? '1px solid white' : '1px solid black',
@@ -74,19 +73,16 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/storage'
+
 import Upper from '../../filters/Upper.js'
 import Plus from './Plus.vue'
 
 export default {
-  components: {
-    Plus,
-  },
-
-  filters: { Upper },
-
   props: {
     CardInfo: {
-      type: Object,
+      type: [Object, Array],
       required: true,
     },
 
@@ -95,6 +91,62 @@ export default {
       required: true,
     },
   },
+
+  components: {
+    Plus,
+  },
+
+  data: () => ({
+    background: '',
+    icon: '',
+    backgroundType: '',
+  }),
+
+  mounted() {
+    firebase
+      .storage()
+      .ref()
+      .child(
+        `/pokemons/${this.CardInfo.PokemonLinkGeneration}/${this.CardInfo.PokemonName}.png`
+      )
+      .getDownloadURL()
+      .then((url) => {
+        this.background = url
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    firebase
+      .storage()
+      .ref()
+      .child(`/icons/${this.CardInfo.PokemonTypeIcon}.png`)
+      .getDownloadURL()
+      .then((url) => {
+        this.icon = url
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    firebase
+      .storage()
+      .ref()
+      .child(
+        `/pokemons/types_background/${this.CardInfo.PokemonBackgroundName}`
+      )
+      .getDownloadURL()
+      .then((url) => {
+        this.backgroundType = url
+
+        console.log(url)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  },
+
+  filters: { Upper },
 
   emits: ['GoToParams', 'ChooseYou'],
 

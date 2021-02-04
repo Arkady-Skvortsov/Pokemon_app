@@ -8,7 +8,7 @@
         v-if="openPage"
         @SortByRace2="SortByRace2"
         @changeParams="changeParams2"
-        :pokemons2="pokemons"
+        :pokemons2="filteredValue"
       />
     </div>
 
@@ -72,6 +72,9 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/database'
+
 import Upper from '../filters/Upper.js'
 import Tags from '../components/Tags.vue'
 import Notification from '../components/Notification.vue'
@@ -155,8 +158,6 @@ export default {
     this.SearchCheck()
 
     this.pokemons2 = this.pokemons
-
-    console.log(this.tag)
   },
 
   methods: {
@@ -582,7 +583,7 @@ export default {
 
         return
       } else {
-        this.$router.push('/pokemon/' + data.id)
+        this.$router.push('/pokemon/' + Upper(data.PokemonName))
 
         this.$store.dispatch('pokemon/GETERRNOTIFICATION', '')
       }
@@ -597,17 +598,20 @@ export default {
     },
 
     SearchCheck() {
-      this.pokemons2 = []
-
-      if (this.searchValue) {
-        this.pokemons2 = this.pokemons.filter((item) => {
+      if (this.searchValue !== '') {
+        this.pokemons2.filter((item) => {
           return item.PokemonName.toLowerCase().includes(
             this.searchValue.toLowerCase()
           )
         })
-      } else {
-        this.pokemons2 = this.pokemons
       }
+
+      this.pokemons2 = firebase
+        .database()
+        .ref('Pokemons/')
+        .orderByChild('PokemonName')
+        .startAt(this.searchValue)
+        .endAt(this.searchValue + '\uf8ff')
     },
   },
 }

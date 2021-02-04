@@ -4,10 +4,8 @@
     :style="{
       background:
         pokTheme === false
-          ? `linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.833333) 0.01%, rgba(255, 255, 255, 0.829076) 0.02%, rgba(255, 255, 255, 0.786052) 0.03%, rgba(255, 255, 255, 0) 100%), url(${require('../../assets/img/pockemons/types_background/JPG/' +
-              pokemon.PokemonTypeBackground)})`
-          : `linear-gradient(180deg, #000000 0%, rgba(12, 12, 12, 0.953125) 0.01%, rgba(255, 255, 255, 0) 100%), url(${require('../../assets/img/pockemons/types_background/JPG/' +
-              pokemon.PokemonTypeBackground)})`,
+          ? `linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.833333) 0.01%, rgba(255, 255, 255, 0.829076) 0.02%, rgba(255, 255, 255, 0.786052) 0.03%, rgba(255, 255, 255, 0) 100%), url(${backgroundType})`
+          : `linear-gradient(180deg, #000000 0%, rgba(12, 12, 12, 0.953125) 0.01%, rgba(255, 255, 255, 0) 100%), url(${backgroundType})`,
       'background-position': 'center',
       'background-size': 'cover',
     }"
@@ -32,8 +30,7 @@
       <div
         class="block-type"
         :style="{
-          'background-image': `url(${require('../../assets/img/icons/' +
-            pokemon.PokemonIcon)})`,
+          'background-image': `url(${Icon})`,
           'background-position': 'center',
           'background-size': 'cover',
           border: pokTheme === true ? '1px solid black' : '1px solid white',
@@ -44,8 +41,7 @@
     <div
       class="pokemon-avatar-block"
       :style="{
-        'background-image': `url(${require('../../assets/img/pockemons/first_generation/' +
-          pokemon.PokemonBackground)})`,
+        'background-image': `url(${background})`,
         'background-size': 'cover',
         'background-position': 'center',
         border: pokTheme === true ? '1px solid black' : '1px solid white',
@@ -55,8 +51,8 @@
     <div class="pokemon-little-information-block">
       <div class="pokemon__height blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
-          >Height: {{ pokemon.PokemonHeight }}m</span
-        ><!-- m -->
+          >Height: {{ pokemon.PokemonInfo.Height }}m</span
+        ><!-- m(Height) -->
       </div>
       <div class="pokemon__name blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
@@ -65,8 +61,8 @@
       </div>
       <div class="pokemon__weight blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
-          >Weight: {{ pokemon.PokemonWeight }}kg</span
-        ><!-- kg -->
+          >Weight: {{ pokemon.PokemonInfo.Weight }}kg</span
+        ><!-- kg(Weight) -->
       </div>
       <div class="pokemon__type blocks">
         <span :style="{ color: pokTheme === true ? 'black' : 'white' }"
@@ -106,6 +102,9 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/storage'
+
 import Upper from '../../filters/Upper.js'
 import About from '../../components/Card/About.vue'
 import Stat from '../../components/Card/Stat.vue'
@@ -113,13 +112,16 @@ import Stat from '../../components/Card/Stat.vue'
 export default {
   layout: 'empty',
 
+  filters: { Upper },
+
   data() {
     return {
       txt: 'Параметры',
+      backgroundType: '',
+      Icon: '',
+      background: '',
     }
   },
-
-  filters: { Upper },
 
   computed: {
     change() {
@@ -131,16 +133,52 @@ export default {
     },
   },
 
-  async asyncData({ $axios, params }) {
-    const pokemon = await $axios.$get(
-      'http://localhost:3000/pokemons/' + params.id
-    )
+  async fetch({ params }) {
+    let pokemon
+
+    await firebase
+      .database()
+      .ref('Pokemons/' + params.id)
+      .on('value', (data) => {
+        pokemon = data.val()
+      })
 
     return { pokemon }
   },
 
   mounted() {
     setTimeout(() => {
+      firebase
+        .storage()
+        .ref(`/pokemons/types_background/${this.pokemon.PokemonBackgroundName}`)
+        .getDownloadURL()
+        .then((data) => {
+          this.backgroundType = data
+        })
+        .catch((e) => console.log(e))
+
+      firebase
+        .storage()
+        .ref(`/icons/${this.pokemon.PokemonTypeIcon}.png`)
+        .getDownloadURL()
+        .then((url) => {
+          this.Icon = url
+        })
+        .catch((e) => console.log(e))
+
+      firebase
+        .storage()
+        .ref(
+          `/pokemons/${this.pokemon.PokemonLinkGeneration}/${this.pokemon.PokemonName}.png`
+        )
+        .getDownloadURL()
+        .then((Url) => {
+          this.background = Url
+        })
+        .catch((e) => console.log(e))
+
+      console.log(this.pokemon.PokemonInfo)
+
       this.$store.dispatch('pokemon/CHANGESTATPARAMS', this.pokemon.PokemonInfo)
       this.$store.dispatch(
         'pokemon/CHANGEABOUTPARAMS',

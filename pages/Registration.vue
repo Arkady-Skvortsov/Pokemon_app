@@ -13,6 +13,25 @@
 
     <div class="registration-process-block">
       <form>
+        <div class="photoURL-registration">
+          <div
+            class="photoURL-main-block"
+            :style="{
+              'background-image': `url(${back})`,
+              'background-position': 'center',
+              'background-size': 'cover',
+            }"
+          >
+            <button class="photo-add-button">
+              <input
+                type="file"
+                class="inputFile"
+                @change="ChangeImg($event)"
+              />
+            </button>
+          </div>
+        </div>
+
         <div class="email-registration">
           <input
             type="text"
@@ -62,7 +81,6 @@
 
 <script>
 import { email, required, minLength, maxLength } from 'vuelidate/lib/validators'
-import firebase from 'firebase/app'
 
 export default {
   layout: 'empty',
@@ -70,11 +88,14 @@ export default {
   data: () => ({
     email: '',
     password: '',
+    photoURL: null,
+    back: null,
   }),
 
   validations: {
     email: { required, email },
     password: { required, minLength: minLength(6), maxLength: maxLength(12) },
+    photoURL: { required },
   },
 
   methods: {
@@ -87,6 +108,7 @@ export default {
       const formData = {
         email: this.email,
         password: this.password,
+        photoURL: this.photoURL,
       }
 
       try {
@@ -94,6 +116,19 @@ export default {
 
         this.$router.push('/home')
       } catch (e) {}
+    },
+
+    ChangeImg(e) {
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        this.back = reader.result
+        //e.target.files[0]
+      }
+
+      this.photoURL = e.target.files[0]
+
+      reader.readAsDataURL(e.target.files[0])
     },
   },
 }
@@ -125,6 +160,46 @@ export default {
     justify-content: center;
     align-items: space-between;
     margin: 0 auto;
+
+    .photoURL-registration {
+      height: 110px;
+      width: 110px;
+      border-radius: 55px;
+      margin: 0 auto;
+
+      .photoURL-main-block {
+        height: inherit;
+        width: inherit;
+        background: $b;
+        border-radius: 55px;
+
+        .photo-add-button {
+          background: $w;
+          height: $btn_height;
+          width: $btn_height;
+          border-radius: $f_size2;
+          border: 0;
+          z-index: 4;
+          margin-top: 80px;
+          margin-left: 75px;
+          cursor: pointer;
+
+          .inputFile::-webkit-file-upload-button {
+            visibility: hidden;
+          }
+
+          .inputFile::before {
+            content: '+';
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            margin-left: 1px;
+            font-size: 30px;
+          }
+        }
+      }
+    }
 
     .email-registration {
       .email {

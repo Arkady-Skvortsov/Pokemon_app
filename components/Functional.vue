@@ -46,7 +46,7 @@
 </template>
 <script>
 export default {
-  emits: ['ChageTheme'],
+  emits: ['ChangeTheme'],
 
   data: () => ({
     name: '',
