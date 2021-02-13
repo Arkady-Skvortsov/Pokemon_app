@@ -1,10 +1,11 @@
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 export default {
   state: () => ({
     error: null,
     mode: null,
-    photoAuth: '',
+    photoAuth: null,
   }),
 
   actions: {
@@ -15,14 +16,15 @@ export default {
         await firebase
           .auth()
           .signInWithEmailAndPassword(email, password)
-          .then(() => {
-            this.photoAuth = firebase
+          .then((user) => {
+            firebase
               .storage()
-              .ref(`user/${uid}`)
+              .ref(`users/${uid}`)
               .getDownloadURL()
-              .once('value', (d) => {
-                console.log(d)
+              .then((data) => {
+                commit('changePhoto', data)
               })
+              .catch((e) => console.log(e))
           })
       } catch (e) {
         commit('SetError', e)
@@ -37,29 +39,31 @@ export default {
 
     async Register({ commit, dispatch }, { email, password, photoURL }) {
       const uid = await dispatch('getUid')
+
       try {
         await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then(() => {
             firebase.storage().ref(`users/${uid}`).put(photoURL)
-          })
 
-        await firebase.database().ref(`users/${uid}/info`).set({
-          email,
-          password,
-        })
+            firebase.firestore.collection('users').set({
+              email,
+              password,
+              uid,
+            })
+          })
 
         await firebase
           .storage()
-          .ref(`users/`)
-          .child(uid)
+          .ref(`users/${uid}`)
           .getDownloadURL()
           .then((data) => {
             console.log(data)
 
             commit('changePhoto', data)
           })
+          .catch((e) => console.log(e))
       } catch (e) {
         commit('SetError', e)
 

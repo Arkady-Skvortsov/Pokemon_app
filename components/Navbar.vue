@@ -67,7 +67,7 @@ export default {
 <style lang="scss">
 .main-navbar-container {
   height: 70px;
-  width: 100vw;
+  width: 100%;
   background: $sun_color;
   border-top: $b_black;
 

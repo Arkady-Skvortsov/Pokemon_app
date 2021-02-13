@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 export const state = () => ({
   choicePokemon: false,
@@ -55,7 +56,11 @@ export const mutations = {
   },
 
   GETPOKEMONS(state, payload) {
-    state.pokemons = payload
+    if (state.pokemons.includes(payload)) {
+      return
+    } else {
+      state.pokemons.push(payload)
+    }
   },
 
   GETFIRSTVSPOKEMON(state, newPok) {
@@ -118,10 +123,14 @@ export const actions = {
 
   async GETPOKEMONS({ commit }) {
     await firebase
-      .database()
-      .ref('Pokemons/')
-      .once('value', (data) => {
-        commit('GETPOKEMONS', data.val())
+      .firestore()
+      .collection('pokemons')
+      .get()
+      .then((querySnap) => {
+        querySnap.docs.map((item) => {
+          // commit('GETPOKEMONS', item.data())
+          console.log(item.data())
+        })
       })
   },
 
@@ -199,5 +208,4 @@ export const getters = {
   VSNOTIFICATION: (s) => s.vs_notification,
   TAGS: (s) => s.tags,
   VSHISTORY: (s) => s.vs_history,
-  TAGSOBJ: (s) => Object.fromEntries(s.tags),
 }

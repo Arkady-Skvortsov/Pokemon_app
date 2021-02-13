@@ -110,11 +110,13 @@ export default {
 
 <style lang="scss">
 .main-login-block {
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
   background-position: center;
   background-size: cover;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 
   .login-title {
     margin: 5px auto;

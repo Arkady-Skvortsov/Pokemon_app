@@ -9,11 +9,7 @@
           'background-size': 'cover',
           'background-position': 'center',
         }"
-      >
-        <button class="change-avatar-button">
-          <input type="file" class="changeAvatar" @change="ChangeAvatar" />
-        </button>
-      </div>
+      ></div>
     </div>
     <div class="UserInfo-blocks">
       <span class="UserInfo-txt2">Ваш email:</span>
@@ -21,7 +17,15 @@
     </div>
     <div class="UserInfo-blocks">
       <span class="UserInfo-txt2">Ваш уникальный код:</span>
-      <span class="UserInfo-txt">{{ password }}</span>
+      <input
+        class="UserInfo-txt inpt"
+        ref="input"
+        type="password"
+        :value="password"
+      />
+      <button class="eyeButton" @click="showHidepassword">
+        <i class="material-icons eye-icon">eye</i>
+      </button>
     </div>
     <div class="UserInfo-blocks">
       <span class="UserInfo-txt2">Последний визит: {{ lastVisit }}</span>
@@ -50,10 +54,6 @@ export default {
         ? (this.$refs.input.type = 'text')
         : (this.$refs.input.type = 'password')
     },
-
-    ChangeAvatar(e) {
-      console.log(e.target.files[0])
-    },
   },
 
   computed: {
@@ -77,32 +77,6 @@ export default {
     height: 110px;
     width: 110px;
     border-radius: 55px;
-
-    .change-avatar-button {
-      background: $w;
-      height: $btn_height;
-      width: $btn_height;
-      border-radius: $f_size2;
-      border: 0;
-      z-index: 4;
-      margin-top: 80px;
-      margin-left: 75px;
-      cursor: pointer;
-
-      .changeAvatar::-webkit-file-upload-button {
-        visibility: hidden;
-      }
-
-      .changeAvatar::before {
-        content: '+';
-        outline: none;
-        white-space: nowrap;
-        -webkit-user-select: none;
-        cursor: pointer;
-        margin-left: 1px;
-        font-size: 30px;
-      }
-    }
   }
 
   .UserInfo-blocks {
@@ -111,6 +85,20 @@ export default {
     justify-content: space-evenly;
     align-items: center;
     width: 100vw;
+
+    .eyeButton {
+      height: $b_hAndw;
+      width: $b_hAndw;
+      background: $w;
+      border: 0;
+      border-radius: 20px;
+      cursor: pointer;
+      transform: scale(0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+    }
 
     .UserInfo-input {
       font-size: $f_size2;

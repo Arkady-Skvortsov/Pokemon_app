@@ -18,7 +18,7 @@
 
       <div class="tag-name__block">
         <span class="tag-name" :style="{ color: Theme ? 'white' : 'black' }">{{
-          TAG
+          TAG.name
         }}</span>
       </div>
     </div>
@@ -27,23 +27,26 @@
 
 <script>
 export default {
+  props: {
+    TAG: {
+      type: [Array, Object],
+      required: true,
+    },
+  },
+
   computed: {
     Theme() {
       return this.$store.getters['theme/CHANGETHEME']
     },
-
-    TAG() {
-      return this.$store.getters['theme/TAGSOBJ']
-    },
   },
 
   mounted() {
-    console.log(this.TAG)
+    this.TAG.func()
   },
 
   methods: {
     DelTag() {
-      console.log(this.TAG[0])
+      this.$store.dispatch('pokemon/CLEARTAG')
     },
   },
 }

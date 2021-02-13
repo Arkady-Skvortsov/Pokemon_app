@@ -722,31 +722,25 @@ export default {
 
   methods: {
     SortByIndex(idx) {
-      // const name = 'По индексу'
-      // switch (idx) {
-      //   case 0:
-      //     this.pokemons3.sort((a, b) => a.id - b.id)
-      //     this.idxStandart = this.settingsIndex[0].name
-      //     break
-      //   case 1:
-      //     this.pokemons3.sort((a, b) => b.id - a.id)
-      //     this.idxStandart = this.settingsIndex[1].name
-      //     break
-      // }
-      // if (this.Tags.includes(name)) {
-      //   return
-      // } else {
-      //   this.$store.dispatch('pokemon/SETTAG', {
-      //     name,
-      //     func: this.SortByIndex,
-      //   })
-      // }
-      // firebase
-      //   .database()
-      //   .ref('Pokemons/')
-      //   .orderByChild('id')
-      //   .startAt()
-      //   .once('value', (data) => console.log(data.val()))
+      const obj = {
+        name: 'По индексу',
+        func: () => {
+          switch (idx) {
+            case 0:
+              //this.pokemons3.sort((a, b) => a.id - b.id)
+              this.idxStandart = this.settingsIndex[0].name
+              console.log(idx)
+              break
+            case 1:
+              //this.pokemons3.sort((a, b) => b.id - a.id)
+              this.idxStandart = this.settingsIndex[1].name
+              console.log(idx)
+              break
+          }
+        },
+      }
+
+      this.$store.dispatch('pokemon/SETTAG', obj)
     },
 
     SortByName(idx) {

@@ -52,7 +52,7 @@
     </div>
 
     <div class="render-tags-block">
-      <Tags v-for="(Tag, index) in tag" :key="index" />
+      <Tags v-for="(Tag, idx) of tag2" :key="idx" :TAG="Tag" />
     </div>
 
     <div v-if="notification.err.txt">
@@ -72,9 +72,6 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/database'
-
 import Upper from '../filters/Upper.js'
 import Tags from '../components/Tags.vue'
 import Notification from '../components/Notification.vue'
@@ -96,6 +93,7 @@ export default {
   data: () => ({
     pokemons2: [],
     noResults: false,
+    tag2: [],
   }),
 
   computed: {
@@ -158,6 +156,10 @@ export default {
     this.SearchCheck()
 
     this.pokemons2 = this.pokemons
+
+    this.tag2 = this.tag
+
+    console.log(this.pokemons2, this.pokemons)
   },
 
   methods: {
@@ -599,31 +601,33 @@ export default {
 
     SearchCheck() {
       if (this.searchValue !== '') {
-        this.pokemons2.filter((item) => {
-          return item.PokemonName.toLowerCase().includes(
-            this.searchValue.toLowerCase()
-          )
-        })
+        // this.pokemons2.filter((item) => {
+        //   return item.PokemonName.toLowerCase().includes(
+        //     this.searchValue.toLowerCase()
+        //   )
+        // })
+        // firebase
+        //   .database()
+        //   .ref('Pokemons')
+        //   .orderByValue('PokemonName')
+        //   .equalTo(this.searchValue)
+        //   .on('child_changed', (data) => {
+        //     console.log(data.val())
+        //   })
       }
-
-      this.pokemons2 = firebase
-        .database()
-        .ref('Pokemons/')
-        .orderByChild('PokemonName')
-        .startAt(this.searchValue)
-        .endAt(this.searchValue + '\uf8ff')
     },
   },
 }
 </script>
 
 <style lang="scss">
-@media only screen and (min-device-width: 320px) {
+@media only screen and (min-device-width: 360px) {
   .pokemon-home-page {
-    height: 100vh;
-    width: 100vw;
-    background: $w;
     overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
 
     .pokemon-home-page__filter {
       @include FilAndCanButton(30px, 125px, $w, 'none');

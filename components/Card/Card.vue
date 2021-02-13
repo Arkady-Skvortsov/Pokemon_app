@@ -75,6 +75,7 @@
 <script>
 import firebase from 'firebase/app'
 import 'firebase/storage'
+import 'firebase/firestore'
 
 import Upper from '../../filters/Upper.js'
 import Plus from './Plus.vue'
